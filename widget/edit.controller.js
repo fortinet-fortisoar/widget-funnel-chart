@@ -11,7 +11,7 @@
     $scope.save = save;
     $scope.config = config;
     $scope.setNull = setNull;
-    // $scope.displayModule = displayModule;
+
     $scope.funnelLevel = {
       levels: [1, 2, 3, 4],
     };
@@ -26,19 +26,11 @@
     }
     init();
 
-    // function displayModule() {
-    //   var module = _.filter( $scope.modules, function(module){
-    //     return module.type === $scope.config.module1;
-    //   })
-    //   console.log('module1 ', module);
-    // }
-
     function setNull() {
-      $scope.config.modules = [];
-      $scope.config.module1 = null;
-      $scope.config.module2 = null;
-      $scope.config.module3 = null;
-      $scope.config.module4 = null;
+      for(var i = $scope.config.funnelLevel; i<4; i++){
+        var moduleVar = 'module'+(i+1);
+        $scope.config[moduleVar] = null;
+      }
     }
 
     function cancel() {

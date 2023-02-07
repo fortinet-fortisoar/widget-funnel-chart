@@ -7,15 +7,9 @@
   funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API'];
 
   function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API) {
-    // $scope.modules = $scope.config.modules;
     __init()
 
     function __init() {
-      // $scope.modules = [];
-      // for(var i = 1; i <= $scope.config.funnelLevel; i++){
-      //   $scope.modules.push($scope.config['module'+i]);
-      // }
-      // console.log($scope.modules1);
       populateData();
     }
 
@@ -23,7 +17,7 @@
       var margin = 0;
       var width = 15 + (30 * ($scope.config.funnelLevel + 3));
       var red = 30;
-      var green = 150;
+      var green = 130;
       var blue = 240;
       var parentDiv = document.getElementById('parentDiv')
       for (let i = 0; i < $scope.config.funnelLevel; i++) {
@@ -54,7 +48,7 @@
         parentDiv.appendChild(funnel);
         parentDiv.appendChild(spacer);
 
-        green += 25;
+        green += 35;
         margin = margin + 15;
         width = width - 30;
       }
@@ -66,7 +60,6 @@
       $scope.config.moduleList.forEach((module, index) => {
         var promise = getRecords(module.type).then(function (result) {
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-            // $scope.totalAlerts = result['hydra:member'][0].alerts;
             $scope.config.moduleList[index].data = result['hydra:member'][0][module.type];
           }
         });

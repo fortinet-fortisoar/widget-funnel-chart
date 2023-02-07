@@ -17,8 +17,8 @@
             </div>
             <div>
                 <label for="funnelLevel" class="control-label">Set Funnel Level</label>
-                <select class="form-control" style="width:30%" ng-options="level for level in funnelLevel.levels"
-                    ng-model="config.funnelLevel" required>
+                <select class="form-control" style="width:30%" data-ng-options="level for level in funnelLevel.levels"
+                    data-ng-model="config.funnelLevel" data-ng-change="setNull()" required>
                 </select>
             </div>
             <div class="pull-left margin-right-3">
