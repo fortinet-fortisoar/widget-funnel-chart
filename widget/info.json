@@ -1,18 +1,17 @@
 {
-    "name": "funnelChart",
-    "title": "Funnel Chart",
-    "subTitle": "Funnel Chart",
-    "version": "1.0.0",
-    "metadata": {
-        "description": "",
-        "pages": [
-            "Dashboard"
-        ],
-        "certified": "No",
-        "publisher": "",
-        "compatibility": [
-            "7.3.0"
-        ]
-    },
-    "development": true
+	"name": "funnelChart",
+	"title": "Funnel Chart",
+	"subTitle": "Funnel Chart",
+	"version": "1.0.0",
+	"metadata": {
+		"description": "",
+		"pages": [
+			"Dashboard"
+		],
+		"certified": "No",
+		"publisher": "",
+		"compatibility": [
+			"7.3.0"
+		]
+	}
 }

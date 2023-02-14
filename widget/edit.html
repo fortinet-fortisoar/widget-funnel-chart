@@ -1,7 +1,7 @@
 <form data-ng-submit="save()" class="noMargin" name="editWidgetForm" data-ng-class="{'state-wait': processing }"
     novalidate>
     <div class="modal-header">
-        <h3 class="modal-title col-md-9">Hello World Edit View</h3>
+        <h3 class="modal-title col-md-9">Edit Funnel Chart</h3>
         <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"
             id="close-edit-widget-form-btn">
             <div aria-hidden="true" class="version-button">+</div>
@@ -13,86 +13,122 @@
                 <label for="hqTitle" class="control-label">Title<span class="text-danger">*</span></label>
                 <input id="hqTitle" name="title" type="text" data-ng-model="config.title" class="form-control"
                     required />
-                <div data-cs-messages="editHappinessQuotientForm.title"></div>
+                <div data-cs-messages="editWidgetForm.title"></div>
             </div>
             <div>
-                <label for="funnelLevel" class="control-label">Set Funnel Level</label>
-                <select class="form-control" style="width:30%" data-ng-options="level for level in funnelLevel.levels"
-                    data-ng-model="config.funnelLevel" data-ng-change="setNull()" required>
+                <label for="funnelModuleType" class="control-label">Select Module Type</label>
+                <select class="form-control" style="width:30%"
+                    data-ng-options="key as value for (key, value) in funnelModuleType.type"
+                    data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" required>
+                    <option value="">Select an Option</option>
                 </select>
+
             </div>
-            <div class="pull-left margin-right-3">
-                <div class="form-group">
-                  <label class="search-playbook-label">Created On</label>
-                  <div class="padding-top-sm padding-bottom-sm">
-                    <div class="cs-select">
-                      <select name="lastRun" id="lastRun" class="form-control running-playbook-dropdown" data-ng-model="config.lastRun" data-ng-options="key as value for (key, value) in params.dateTimeOptions" >
-                        <option value="">All</option>
-                      </select>
-                      <span class="fa fa-sort-desc"></span>
+
+            <div data-ng-if="config.funnelModuleType == 0">
+                <div class="form-group" data-ng-if="modules">
+                    <div data-ng-repeat="item in config.layers">
+                        <h6>Layer {{$index +1}}</h6>
+                        <label class="control-label">Title<span class="text-danger">*</span></label>
+                        <input name="layer" type="text" data-ng-model="item.title" class="form-control" required />
+                        <label class="control-label">Data Source <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" data-ng-options="module.type as module.name for module in modules"
+                            data-ng-model="item.value" data-ng-change="loadAttributes($index)" required>
+                            <option value="">Select an Option</option>
+                        </select>
+                        <div class="margin-top-md margin-bottom-md" data-ng-if="item.fields !== undefined">
+                            <label class="control-label">Filter Criteria <span class="text-danger">*</span>
+                            </label>
+                            <div data-cs-conditional data-ng-if="item.fieldsArray.length > 0" data-fields="item.fields"
+                                data-reset-field="item.fields" data-mode="'queryFilters'" data-ng-model="item.query"
+                                data-parent-form="editWidgetForm"
+                                data-enable-expression="(page==='dashboard' || page==='reporting')"
+                                data-show-uuid="true" data-form-name="'editWidgetForm'"></div>
+                        </div>
+                        <button type="button" data-ng-click="removeLayer($index)" id='fsr-module-{{ $index }}'
+                            class="btn-sm btn btn-link btn-conditional-delete"
+                            style="top : -140px; right:-500px; position: relative;" data-ng-if="$index !== 0">
+                            <span class="icon icon-close text-danger"></span>
+                        </button>
                     </div>
-                  </div>
+
                 </div>
-              </div>
-            
-          </div>
-            <div ng-if="config.funnelLevel !== undefined && config.funnelLevel >= 1">
-                <div class="form-group"
-                    data-ng-if="modules">
-                    <label class="control-label">Data Source 1<span
-                            class="text-danger">*</span>
-                    </label>
-                    <select  class="form-control"
-                        data-ng-options="module.type as module.name for module in modules"
-                        data-ng-model="config.module1"  required>
-                        <option value="">Select an Option</option>
-                    </select>
-                </div>
-            </div>
-            <div ng-if="config.funnelLevel !== undefined && config.funnelLevel >= 2">
-                <div class="form-group"
-                    data-ng-if="modules">
-                    <label class="control-label">Data Source 2<span
-                            class="text-danger">*</span>
-                    </label>
-                    <select  class="form-control"
-                        data-ng-options="module.type as module.name for module in modules"
-                        data-ng-model="config.module2" required>
-                        <option value="">Select an Option</option>
-                    </select>
-                </div>
-            </div>
-            <div ng-if="config.funnelLevel !== undefined && config.funnelLevel >= 3">
-                <div class="form-group"
-                    data-ng-if="modules">
-                    <label class="control-label">Data Source 3<span
-                            class="text-danger">*</span>
-                    </label>
-                    <select  class="form-control"
-                        data-ng-options="module.type as module.name for module in modules"
-                        data-ng-model="config.module3"  required>
-                        <option value="">Select an Option</option>
-                    </select>
-                </div>
-            </div>
-            <div ng-if="config.funnelLevel !== undefined && config.funnelLevel >= 4">
-                <div class="form-group"
-                    data-ng-if="modules">
-                    <label class="control-label">Data Source 4<span
-                            class="text-danger">*</span>
-                    </label>
-                    <select  class="form-control"
-                        data-ng-options="module.type as module.name for module in modules"
-                        data-ng-model="config.module4" required>
-                        <option value="">Select an Option</option>
-                    </select>
+
+                <div>
+                    <div class="row margin-left-0 margin-top-lg margin-bottom-lg" data-ng-hide="processing || disabled">
+                        <div class="">
+                            <a class="pull-left font-10px btn-link btn" name="addLayerButton"
+                                data-ng-click="addLayer()"><i class="icon icon-add"></i>&nbsp;ADD Layer</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
-                        class="icon icon-check margin-right-sm"></i>Save</button>
-                <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
-                        class="icon icon-close margin-right-sm"></i>Close</button>
+            <div data-ng-if="config.funnelModuleType == 1">
+                <div class="form-group" data-ng-if="modules">
+                    <label class="control-label">Data Source<span class="text-danger">*</span>
+                    </label>
+                    <select class="form-control" data-ng-options="module.type as module.name for module in modules"
+                        data-ng-model="config.customModule"
+                        data-ng-change="loadAttributesForCustomModule(config.customModule)" required>
+                        <option value="">Select an Option</option>
+                    </select>
+                </div>
+
+                <div class="form-group" data-ng-if="config.customModule !== undefined">
+                    <div class="form-group" data-ng-if="fieldsArray.length > 0">
+                        <label class="control-label">Select field for data source<span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control"
+                            data-ng-options="field.name as field.title for field in fieldsArray"
+                            data-ng-model="config.customModuleField" required>
+                            <option value="">Select an Option</option>
+                        </select>
+                    </div>
+                    <div class="margin-top-md margin-bottom-md" data-ng-if="config.customModuleField !== undefined">
+                        <label class="control-label">Filter Record Which Contains The Data<span class="text-danger">*</span>
+                        </label>
+                        <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
+                            data-reset-field="$parent.fields" data-mode="'queryFilters'"
+                            data-ng-model="$parent.config.query" data-parent-form="editWidgetForm"
+                            data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
+                            data-form-name="'editWidgetForm'"></div>
+                    </div>
+                    <div class="mertics-widget-border padding-top-md padding-bottom-md"></div>
+
+                    <div class="form-group" data-ng-repeat="item in config.layers" data-ng-if="config.customModuleField !== undefined">
+                        <h6>Layer {{$index +1}}</h6>
+                        <label class="control-label">Title<span class="text-danger">*</span></label>
+                        <input name="layer" type="text" data-ng-model="item.title" class="form-control" required />
+
+                        <label class="control-label">value<span class="text-danger">*</span></label>
+                        <input name="layer" type="text" data-ng-model="item.value" class="form-control" required />
+
+                        <div data-cs-messages="editWidgetForm.layer"></div>
+                        <button type="button" data-ng-click="removeLayer($index)" id='fsr-module-{{ $index }}'
+                        class="btn-sm btn btn-link btn-conditional-delete"
+                        style="top : -140px; right:-500px; position: relative;" data-ng-if="$index !== 0">
+                        <span class="icon icon-close text-danger"></span>
+                    </button>
+                    </div>
+                    <div>
+                        <div class="row margin-left-0 margin-top-lg margin-bottom-lg"
+                            data-ng-hide="processing || disabled" data-ng-if="config.customModuleField !== undefined">
+                            <div class="">
+                                <a class="pull-left font-10px btn-link btn" name="addLayerButton"
+                                    data-ng-click="addLayer()"><i class="icon icon-add"></i>&nbsp;ADD Layer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="modal-footer">
+            <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
+                    class="icon icon-check margin-right-sm"></i>Save</button>
+            <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
+                    class="icon icon-close margin-right-sm"></i>Close</button>
+        </div>
+    </div>
 </form>

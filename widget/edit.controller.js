@@ -4,52 +4,107 @@
     .module('cybersponse')
     .controller('editFunnelChart100DevCtrl', editFunnelChart100DevCtrl);
 
-  editFunnelChart100DevCtrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_','CRUD_HUB'];
-
-  function editFunnelChart100DevCtrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB) {
+  editFunnelChart100DevCtrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_','CRUD_HUB', 'Entity'];
+ 
+  function editFunnelChart100DevCtrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
-    $scope.setNull = setNull;
+    $scope.loadAttributesForCustomModule = loadAttributesForCustomModule;
+    $scope.loadAttributes = loadAttributes;
+    $scope.addLayer = addLayer;
+    $scope.removeLayer = removeLayer;
+    $scope.onChangeModuleType = onChangeModuleType;
 
-    $scope.funnelLevel = {
-      levels: [1, 2, 3, 4],
-    };
-    $scope.params = {
-      dateTimeOptions: CRUD_HUB.DATETIME_PAST
-    };
+    $scope.funnelModuleType = {
+      type: ['Across Modules', 'Single Module' ]
+    }
+
+    function addLayer(){
+      if($scope.config.layers.length <4){
+        $scope.config.layers.push({
+          value:'',
+          title:''
+        });
+      }
+    }
 
     function init() {
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
       })
+      $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{value:'', title:''}];
     }
+
     init();
 
-    function setNull() {
-      for(var i = $scope.config.funnelLevel; i<4; i++){
-        var moduleVar = 'module'+(i+1);
-        $scope.config[moduleVar] = null;
+    function onChangeModuleType(){
+      delete $scope.config.query;
+      delete $scope.config.customModuleField;
+      delete $scope.config.customModule;
+      $scope.config.layers = [];
+      $scope.config.layers.push({value:'', title:''});
+    }
+
+    $scope.$watch('config.customModule', function (oldValue, newValue) {
+      if ($scope.config.customModule && oldValue !== newValue) {
+        delete $scope.config.query.filters;
+        delete $scope.config.customModuleField;
+        $scope.loadAttributesForCustomModule();
+      }
+    });
+
+    if ($scope.config.customModule) {
+      $scope.loadAttributesForCustomModule();
+    }
+
+    function removeLayer(index){
+      if(index !== 0){
+        $scope.config.layers.splice(index,1);
       }
     }
+
+    function loadAttributesForCustomModule() {
+      $scope.fields = [];
+      $scope.fieldsArray = [];
+      $scope.pickListFields = [];
+      var entity = new Entity($scope.config.customModule);
+      entity.loadFields().then(function () {
+        for (var key in entity.fields) {
+          if (entity.fields[key].type === "picklist") {
+            $scope.pickListFields.push(entity.fields[key]);
+          }
+        }
+        $scope.fields = entity.getFormFields();
+        angular.extend($scope.fields, entity.getRelationshipFields());
+        $scope.fieldsArray = entity.getFormFieldsArray();
+      });
+    }
+
+    function loadAttributes(index) {
+      $scope.config.layers[index].fields = [];
+      $scope.config.layers[index].fieldsArray = [];
+      $scope.pickListFields = [];
+      var entity = new Entity($scope.config.layers[index].value);
+      entity.loadFields().then(function () {
+        for (var key in entity.fields) {
+          if (entity.fields[key].type === "picklist") {
+            $scope.pickListFields.push(entity.fields[key]);
+          }
+        }
+        $scope.config.layers[index].fields = entity.getFormFields();
+        angular.extend($scope.config.layers[index].fields, entity.getRelationshipFields());
+        $scope.config.layers[index].fieldsArray = entity.getFormFieldsArray();
+      });
+    }
+
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
 
     function save() {
-      $scope.config.moduleList = [];
-      for(var i = 1; i<= $scope.config.funnelLevel; i++){
-        var moduleVar = 'module'+i;
-        var module = _.filter( $scope.modules, function(module){
-          return module.type === $scope.config[moduleVar];
-        })
-        $scope.config.moduleList.push({'name': module[0].name, 'type':module[0].type});
-      }
-      // console.log("MOdule List", $scope.config.moduleList);
-
       $uibModalInstance.close($scope.config);
     }
-
   }
 })();

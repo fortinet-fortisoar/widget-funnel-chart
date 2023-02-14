@@ -4,101 +4,60 @@
     .module('cybersponse')
     .controller('funnelChart100DevCtrl', funnelChart100DevCtrl);
 
-  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API'];
-
-  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API) {
+  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'Modules', 'PagedCollection'];
+   
+  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, Modules, PagedCollection) {
     __init()
-
+ 
     function __init() {
-      populateData();
-    }
-
-    function createFunnel() {
-      var margin = 0;
-      var width = 15 + (30 * ($scope.config.funnelLevel + 3));
-      var red = 30;
-      var green = 130;
-      var blue = 240;
-      var parentDiv = document.getElementById('parentDiv')
-      for (let i = 0; i < $scope.config.funnelLevel; i++) {
-        var funnel = document.createElement('div');
-        var leftTaper = document.createElement('div');
-        var centerTaper = document.createElement('div');
-        var rightTaper = document.createElement('div');
-        funnel.setAttribute('class', 'cont')
-        leftTaper.setAttribute('class', 'taper-left');
-        centerTaper.setAttribute('class', 'taper-center');
-        rightTaper.setAttribute('class', 'taper-right');
-        // set colour for funnel
-        leftTaper.setAttribute('style', 'border-color:'+'rgb(' +red+ ',' + green + ',' + blue + ')'+' transparent');
-        rightTaper.setAttribute('style', 'border-color:'+'rgb(' +red+ ',' + green + ',' + blue+ ')' +' transparent');
-        centerTaper.setAttribute('style', 'background-color:'+'rgb(' +red+ ',' + green + ',' + blue+ '); width :' + width + 'px;');
-        var spacer = document.createElement('div');
-        spacer.setAttribute('class', 'spacer');
-        funnel.setAttribute("style", "margin-left:" + margin + 'px');
-
-        centerTaper.innerHTML = $scope.config.moduleList[i].name;
-        var count = document.createElement('div');
-        count.innerHTML = $scope.config.moduleList[i].data;
-
-        centerTaper.appendChild(count);
-        funnel.appendChild(leftTaper);
-        funnel.appendChild(centerTaper);
-        funnel.appendChild(rightTaper);
-        parentDiv.appendChild(funnel);
-        parentDiv.appendChild(spacer);
-
-        green += 35;
-        margin = margin + 15;
-        width = width - 30;
+      if ($scope.config.funnelModuleType == 0) { populateData(); }
+      else { 
+        populateCustomData();
       }
     }
+    
+    //to populate funnel for custom module
+    function populateCustomData() {
+      $scope.config.moduleList = [];
+      console.log($scope.config.query)
+      var filters = {
+        query: $scope.config.query
+      };
+      var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
+      pagedTotalData.loadByPost(filters).then(function(){
+          $scope.config.layers.forEach((layer, index) => {
+            var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
+            $scope.config.moduleList.push({ 'name': layer.title, 'data': data })
+          });
+          createFunnel();
+      })
+    }
 
-    function populateData() {
-      $scope.data = [];
+    //populate data for fsr modules
+    function populateData(){
       var promises = [];
-      $scope.config.moduleList.forEach((module, index) => {
-        var promise = getRecords(module.type).then(function (result) {
+      $scope.config.moduleList = [];
+      $scope.config.layers.forEach((layer, index) =>{
+        var countAggregate = {
+          alias: layer.value,
+          field: '*',
+          operator: 'count'
+        };
+        layer.query.aggregates = [countAggregate];
+        layer.query.limit = ALL_RECORDS_SIZE;
+        var _queryObj = new Query(layer.query);
+        var promise = getResourceData(layer.value, _queryObj).then(function (result){
           if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-            $scope.config.moduleList[index].data = result['hydra:member'][0][module.type];
+            $scope.config.moduleList.push({ 'name': layer.title, 'data': result['hydra:member'][0][layer.value] })
           }
         });
         promises.push(promise);
       });
-      $q.all(promises).then(function () {
+      $q.all(promises).then(function(){
         createFunnel();
       })
     }
-
-    function getRecords(module) {
-      $scope.moduleDataPromise = [];
-      $scope.totalAlerts = '';
-      if($scope.config.lastRun){
-        var dateRangeFilter = [{
-          'field': 'createDate',
-          'operator': 'date',
-          'value': $scope.config.lastRun,
-          'type': 'datetime'
-        }
-        ];
-      }
-      else{
-        var dateRangeFilter = [];
-      }
-
-      var countAggregate = {
-        alias: module,
-        field: '*',
-        operator: 'count'
-      };
-      var _query = {
-        filters: dateRangeFilter,
-        aggregates: [countAggregate],
-        limit: ALL_RECORDS_SIZE
-      };
-      var _queryObj = new Query(_query);
-      return getResourceData(module, _queryObj);
-    }
+    
     function getResourceData(resource, queryObject) {
       var defer = $q.defer();
       $resource(API.QUERY + resource).save(queryObject.getQueryModifiers(), queryObject.getQuery(true)).$promise.then(function (response) {
@@ -107,6 +66,55 @@
         defer.reject(error);
       });
       return defer.promise;
+    }
+
+    function createFunnel() {
+      var margin = 0;
+      var width = 15 + (30 * ($scope.config.layers.length + 3));
+      var red = 30;
+      var green = 130;
+      var blue = 240;
+      var parentDiv = document.getElementById('parentDiv'+$scope.config.title)
+
+      parentDiv.setAttribute('style', "position: relative; z-index: 1;")
+
+      for (let i = 0; i < $scope.config.layers.length; i++) {
+        var funnel = document.createElement('div');
+        var leftTaper = document.createElement('div');
+        var centerTaper = document.createElement('div');
+        var rightTaper = document.createElement('div');
+
+        funnel.setAttribute('class', 'position-relative cont-' + i );
+        leftTaper.setAttribute('class', 'taper-left');
+        centerTaper.setAttribute('class', 'taper-center');
+        rightTaper.setAttribute('class', 'taper-right');
+
+        // set colour for funnel
+        leftTaper.setAttribute('style', 'border-color:' + 'rgb(' + red + ',' + green + ',' + blue + ')' + ' transparent');
+        rightTaper.setAttribute('style', 'border-color:' + 'rgb(' + red + ',' + green + ',' + blue + ')' + ' transparent');
+        centerTaper.setAttribute('style', 'background-color:' + 'rgb(' + red + ',' + green + ',' + blue + '); width :' + width + 'px;');
+
+        var spacer = document.createElement('div');
+        spacer.setAttribute('class', 'spacer');
+        funnel.setAttribute("style", "margin-left:" + margin + 'px;' + 'height:');
+
+        centerTaper.innerHTML = $scope.config.moduleList[i].name;
+        var count = document.createElement('div');
+        count.innerHTML = $scope.config.moduleList[i].data;
+
+
+        centerTaper.appendChild(count);
+        funnel.appendChild(leftTaper);
+        funnel.appendChild(centerTaper);
+        funnel.appendChild(rightTaper);
+
+        parentDiv.appendChild(funnel);
+        parentDiv.appendChild(spacer);
+
+        green += 35;
+        margin = margin + 15;
+        width = width - 30;
+      }
     }
 
   }
