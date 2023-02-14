@@ -72,7 +72,8 @@
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
       var red = 30;
-      var green = 130;
+      // var green = 130;
+      var green  = 235 - (($scope.config.layers.length -1) * 35);
       var blue = 240;
       var parentDiv = document.getElementById('parentDiv'+$scope.config.title)
 
@@ -84,7 +85,7 @@
         var centerTaper = document.createElement('div');
         var rightTaper = document.createElement('div');
 
-        funnel.setAttribute('class', 'position-relative cont-' + i );
+        funnel.setAttribute('class', 'position-relative cont-' + ($scope.config.layers.length -i - 1) );
         leftTaper.setAttribute('class', 'taper-left');
         centerTaper.setAttribute('class', 'taper-center');
         rightTaper.setAttribute('class', 'taper-right');
@@ -94,14 +95,11 @@
         rightTaper.setAttribute('style', 'border-color:' + 'rgb(' + red + ',' + green + ',' + blue + ')' + ' transparent');
         centerTaper.setAttribute('style', 'background-color:' + 'rgb(' + red + ',' + green + ',' + blue + '); width :' + width + 'px;');
 
-        var spacer = document.createElement('div');
-        spacer.setAttribute('class', 'spacer');
-        funnel.setAttribute("style", "margin-left:" + margin + 'px;' + 'height:');
+        funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ( $scope.config.layers.length - i)+"; display:flex; margin-bottom:10px" );
 
         centerTaper.innerHTML = $scope.config.moduleList[i].name;
         var count = document.createElement('div');
         count.innerHTML = $scope.config.moduleList[i].data;
-
 
         centerTaper.appendChild(count);
         funnel.appendChild(leftTaper);
@@ -109,13 +107,11 @@
         funnel.appendChild(rightTaper);
 
         parentDiv.appendChild(funnel);
-        parentDiv.appendChild(spacer);
 
         green += 35;
         margin = margin + 15;
         width = width - 30;
       }
     }
-
   }
 })();

@@ -22,12 +22,20 @@
                     data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" required>
                     <option value="">Select an Option</option>
                 </select>
-
             </div>
 
-            <div data-ng-if="config.funnelModuleType == 0">
-                <div class="form-group" data-ng-if="modules">
-                    <div data-ng-repeat="item in config.layers">
+
+            <div data-ng-if="config.funnelModuleType == 0" class="dashed-border-section">
+                <div data-ng-if="config.funnelModuleType !== undefined">
+                    <div class="row margin-left-0 margin-top-lg margin-bottom-lg" style="padding-left: 5px;"
+                        data-ng-hide="processing || disabled">
+                        <button data-ng-click="addLayer()" type="button" class="btn-btn btn-sm btn-primary">+ &nbsp;ADD
+                            Layer</button>
+                    </div>
+                </div>
+
+                <div id="funnelModuleType0" class="form-group" data-ng-if="modules" style="padding: 5px;">
+                    <div data-ng-repeat="item in config.layers" style="position:relative;">
                         <h6>Layer {{$index +1}}</h6>
                         <label class="control-label">Title<span class="text-danger">*</span></label>
                         <input name="layer" type="text" data-ng-model="item.title" class="form-control" required />
@@ -47,25 +55,17 @@
                                 data-show-uuid="true" data-form-name="'editWidgetForm'"></div>
                         </div>
                         <button type="button" data-ng-click="removeLayer($index)" id='fsr-module-{{ $index }}'
-                            class="btn-sm btn btn-link btn-conditional-delete"
-                            style="top : -140px; right:-500px; position: relative;" data-ng-if="$index !== 0">
+                            class="btn-sm btn btn-link btn-conditional-delete" style="position: absolute;"
+                            data-ng-if="$index !== 0">
                             <span class="icon icon-close text-danger"></span>
                         </button>
                     </div>
 
                 </div>
-
-                <div>
-                    <div class="row margin-left-0 margin-top-lg margin-bottom-lg" data-ng-hide="processing || disabled">
-                        <div class="">
-                            <a class="pull-left font-10px btn-link btn" name="addLayerButton"
-                                data-ng-click="addLayer()"><i class="icon icon-add"></i>&nbsp;ADD Layer</a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div data-ng-if="config.funnelModuleType == 1">
+
                 <div class="form-group" data-ng-if="modules">
                     <label class="control-label">Data Source<span class="text-danger">*</span>
                     </label>
@@ -77,6 +77,7 @@
                 </div>
 
                 <div class="form-group" data-ng-if="config.customModule !== undefined">
+
                     <div class="form-group" data-ng-if="fieldsArray.length > 0">
                         <label class="control-label">Select field for data source<span class="text-danger">*</span>
                         </label>
@@ -87,7 +88,8 @@
                         </select>
                     </div>
                     <div class="margin-top-md margin-bottom-md" data-ng-if="config.customModuleField !== undefined">
-                        <label class="control-label">Filter Record Which Contains The Data<span class="text-danger">*</span>
+                        <label class="control-label">Filter Record Which Contains The Data<span
+                                class="text-danger">*</span>
                         </label>
                         <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
                             data-reset-field="$parent.fields" data-mode="'queryFilters'"
@@ -97,27 +99,30 @@
                     </div>
                     <div class="mertics-widget-border padding-top-md padding-bottom-md"></div>
 
-                    <div class="form-group" data-ng-repeat="item in config.layers" data-ng-if="config.customModuleField !== undefined">
-                        <h6>Layer {{$index +1}}</h6>
-                        <label class="control-label">Title<span class="text-danger">*</span></label>
-                        <input name="layer" type="text" data-ng-model="item.title" class="form-control" required />
+                    <div data-ng-if="config.customModuleField !==undefined" >
+                        <div class="row margin-left-0 margin-top-lg margin-bottom-lg" style="padding-left: 5px;"
+                            data-ng-hide="processing || disabled">
+                            <button data-ng-click="addLayer()" type="button" class="btn-btn btn-sm btn-primary">+
+                                &nbsp;ADD
+                                Layer</button>
+                        </div>
+                        <div class="dashed-border-section">
+                            <div class="form-group" data-ng-repeat="item in config.layers" style="padding: 5px;position:relative;">
+                                <h6>Layer {{$index +1}}</h6>
+                                <label class="control-label">Title<span class="text-danger">*</span></label>
+                                <input name="layer" type="text" data-ng-model="item.title" class="form-control"
+                                    required />
 
-                        <label class="control-label">value<span class="text-danger">*</span></label>
-                        <input name="layer" type="text" data-ng-model="item.value" class="form-control" required />
+                                <label class="control-label">value<span class="text-danger">*</span></label>
+                                <input name="layer" type="text" data-ng-model="item.value" class="form-control"
+                                    required />
 
-                        <div data-cs-messages="editWidgetForm.layer"></div>
-                        <button type="button" data-ng-click="removeLayer($index)" id='fsr-module-{{ $index }}'
-                        class="btn-sm btn btn-link btn-conditional-delete"
-                        style="top : -140px; right:-500px; position: relative;" data-ng-if="$index !== 0">
-                        <span class="icon icon-close text-danger"></span>
-                    </button>
-                    </div>
-                    <div>
-                        <div class="row margin-left-0 margin-top-lg margin-bottom-lg"
-                            data-ng-hide="processing || disabled" data-ng-if="config.customModuleField !== undefined">
-                            <div class="">
-                                <a class="pull-left font-10px btn-link btn" name="addLayerButton"
-                                    data-ng-click="addLayer()"><i class="icon icon-add"></i>&nbsp;ADD Layer</a>
+                                <div data-cs-messages="editWidgetForm.layer"></div>
+                                <button type="button" data-ng-click="removeLayer($index)" id='fsr-module-{{ $index }}'
+                                    class="btn-sm btn btn-link btn-conditional-delete" style=" position: absolute; top:15%"
+                                    data-ng-if="$index !== 0">
+                                    <span class="icon icon-close text-danger"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
