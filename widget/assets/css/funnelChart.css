@@ -48,8 +48,6 @@
   display: inline-block;
 }
 
-
-
 .cont-3::before {
   content: "";
   height: 30px;
@@ -65,7 +63,7 @@
   width: 225px;
   background-color: rgb(30,130,240);
   position: absolute;
-  top: 30px;
+  top: 32px;
   border-radius: 50%;
   left: 15px;
   z-index: -1;
@@ -85,7 +83,7 @@
   width: 195px;
   background-color: rgb(30,165,240);
   position: absolute;
-  top: 30px;
+  top: 32px;
   border-radius: 50%;
   left: 15px;
   z-index: -1;
