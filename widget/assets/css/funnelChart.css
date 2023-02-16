@@ -48,80 +48,50 @@
   display: inline-block;
 }
 
-.cont-3::before {
+.funnelTop-3::before {
   content: "";
   height: 30px;
   width: 255px;
-  background-color: #cbf0ff;
+  background-color: #005A61;
   position: absolute;
   top: -15px;
   border-radius: 50%;
 }
-.cont-3::after {
-  content: "";
-  height: 35px;
-  width: 225px;
-  background-color: rgb(30,130,240);
-  position: absolute;
-  top: 32px;
-  border-radius: 50%;
-  left: 15px;
-  z-index: -1;
-}
-.cont-2::before {
+
+.funnelTop-2::before {
   content: "";
   height: 30px;
   width: 225px;
-  background-color: #cbf0ff;
+  background-color: #005A61;
   position: absolute;
   top: -15px;
   border-radius: 50%;
 }
-.cont-2::after {
-  content: "";
-  height: 35px;
-  width: 195px;
-  background-color: rgb(30,165,240);
-  position: absolute;
-  top: 32px;
-  border-radius: 50%;
-  left: 15px;
-  z-index: -1;
-}
-.cont-1::before {
+
+.funnelTop-1::before {
   content: "";
   height: 30px;
   width: 195px;
-  background-color: #cbf0ff;
+  background-color: #005A61;
   position: absolute;
   top: -15px;
   border-radius: 50%;
 }
-.cont-1::after {
-  content: "";
-  height: 35px;
-  width: 165px;
-  background-color: rgb(30,200,240);
-  position: absolute;
-  top: 32px;
-  border-radius: 50%;
-  left: 15px;
-  z-index: -1;
-}
-.cont-0::before {
+
+.funnelTop-0::before {
   content: "";
   height: 30px;
   width: 165px;
-  background-color: #cbf0ff;
+  background-color: #005A61;
   position: absolute;
   top: -15px;
   border-radius: 50%;
 }
-.cont-0::after {
+.cont::after {
   content: "";
   height: 35px;
-  width: 135px;
-  background-color: rgb(30,235,240);
+  width: inherit;
+  background-color: inherit;
   position: absolute;
   top: 32px;
   border-radius: 50%;

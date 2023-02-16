@@ -4,8 +4,8 @@
     .module('cybersponse')
     .controller('editFunnelChart100DevCtrl', editFunnelChart100DevCtrl);
 
-  editFunnelChart100DevCtrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_','CRUD_HUB', 'Entity'];
- 
+  editFunnelChart100DevCtrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity'];
+
   function editFunnelChart100DevCtrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity) {
     $scope.cancel = cancel;
     $scope.save = save;
@@ -15,40 +15,36 @@
     $scope.addLayer = addLayer;
     $scope.removeLayer = removeLayer;
     $scope.onChangeModuleType = onChangeModuleType;
+    $scope.maxlayers = false;
 
     $scope.funnelModuleType = {
-      type: ['Across Modules', 'Single Module' ]
-    }
-
-    function addLayer(){
-      if($scope.config.layers.length <4){
-        $scope.config.layers.push({
-          value:'',
-          title:''
-        });
-      }
+      type: ['Across Modules', 'Single Module']
     }
 
     function init() {
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
       })
-      $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{value:'', title:''}];
+      $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: '', title: '' }];
     }
 
     init();
 
-    function onChangeModuleType(){
+
+    function onChangeModuleType() {
       delete $scope.config.query;
       delete $scope.config.customModuleField;
       delete $scope.config.customModule;
+      $scope.maxlayers = false;
       $scope.config.layers = [];
-      $scope.config.layers.push({value:'', title:''});
+      $scope.config.layers.push({ value: '', title: '' });
     }
 
     $scope.$watch('config.customModule', function (oldValue, newValue) {
       if ($scope.config.customModule && oldValue !== newValue) {
-        delete $scope.config.query.filters;
+        if ($scope.config.query.filters) {
+          delete $scope.config.query.filters;
+        }
         delete $scope.config.customModuleField;
         $scope.loadAttributesForCustomModule();
       }
@@ -58,11 +54,6 @@
       $scope.loadAttributesForCustomModule();
     }
 
-    function removeLayer(index){
-      if(index !== 0){
-        $scope.config.layers.splice(index,1);
-      }
-    }
 
     function loadAttributesForCustomModule() {
       $scope.fields = [];
@@ -98,12 +89,35 @@
       });
     }
 
+    function addLayer() {
+      if ($scope.config.layers.length < 4) {
+        $scope.config.layers.push({
+          value: '',
+          title: ''
+        });
+      }
+      else {
+        $scope.maxlayers = true;
+      }
+    }
+    function removeLayer(index) {
+      $scope.maxlayers = false;
+      if (index !== 0) {
+        $scope.config.layers.splice(index, 1);
+      }
+    }
+
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
 
     function save() {
+      if ($scope.editFunnelWidgetForm.$invalid) {
+        $scope.editFunnelWidgetForm.$setTouched();
+        $scope.editFunnelWidgetForm.$focusOnFirstError();
+        return;
+      }
       $uibModalInstance.close($scope.config);
     }
   }
