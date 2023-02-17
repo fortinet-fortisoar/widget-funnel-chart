@@ -26,7 +26,6 @@
     //to populate funnel for custom module
     function populateCustomData() {
       $scope.config.moduleList = [];
-      console.log($scope.config.query)
       var filters = {
         query: $scope.config.query
       };
@@ -89,7 +88,7 @@
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
 
-      var parentDiv = document.getElementById($scope.config.wid)
+      var parentDiv = document.getElementById("funnelChartParentDiv"+$scope.config.wid)
 
       parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
 
