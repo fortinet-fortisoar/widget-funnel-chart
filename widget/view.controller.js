@@ -87,11 +87,8 @@
     function createFunnel() {
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
-
       var parentDiv = document.getElementById("funnelChartParentDiv"+$scope.config.wid)
-
       parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
-
       for (let i = 0; i < $scope.config.layers.length; i++) {
         var funnel = document.createElement('div');
         var leftTaper = document.createElement('div');
@@ -107,7 +104,6 @@
         leftTaper.setAttribute('style', 'border-color:' + $scope.color['layer'+(i+1)] + ' transparent');
         rightTaper.setAttribute('style', 'border-color:' + $scope.color['layer'+(i+1)] + ' transparent');
         centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer'+(i+1)] +'; width :' + width + 'px;');
-
         funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
         var innerTxt =  document.createElement('div');
