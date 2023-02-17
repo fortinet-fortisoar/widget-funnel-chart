@@ -30,9 +30,15 @@
                     <div data-ng-repeat="item in config.layers" class="form-group dashed-border-section"
                         style="position:relative;">
                         <div style="padding: 12px;">
-                            <h6 style="margin-top: 10px;">Layer {{$index +1}}</h6>
-                            <label class="control-label">Title<span class="text-danger">*</span></label>
-                            <input name="layer" type="text" data-ng-model="item.title" class="form-control" required />
+                            <h6 style="margin-top: 0px;">Layer {{$index +1}}</h6>
+
+                            <div
+                                data-ng-class="{ 'has-error': editFunnelWidgetForm['layerTitle-' + $index].$invalid && editFunnelWidgetForm['layerTitle-' + $index].$touched }">
+                                <label class="control-label">Title<span class="text-danger">*</span></label>
+                                <input name="layerTitle-{{$index}}" type="text" data-ng-model="item.title"
+                                    class="form-control" required />
+
+                            </div>
                             <div
                                 data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleValue-' + $index].$invalid && editFunnelWidgetForm['moduleValue-' + $index].$touched }">
                                 <label for="moduleValue" class="control-label">Data Source <span
@@ -55,8 +61,8 @@
                                 </div>
                             </div>
                             <button type="button" data-ng-click="removeLayer($index)" id="fsr-module-{{ $index }}"
-                                class="btn-sm btn btn-link btn-conditional-delete" 
-                                style="position: absolute; top:15%" data-ng-if="$index !== 0">
+                                class="btn-sm btn btn-link btn-conditional-delete" style="position: absolute; top:4%"
+                                data-ng-if="$index !== 0">
                                 <span class="icon icon-close text-danger"></span>
                             </button>
                         </div>
@@ -112,26 +118,31 @@
                     </div>
 
                     <div class="mertics-widget-border padding-top-md padding-bottom-md"></div>
-
                     <div data-ng-if="config.customModuleField !==undefined">
-
                         <div class="form-group dashed-border-section" data-ng-repeat="item in config.layers"
                             style="position:relative;">
-                            <div style="padding: 12px;"
-                                data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
-                                <h6 style="margin-top: 10px;">Layer {{$index +1}}</h6>
-                                <label for="customModuleTitle" class="control-label">Title<span
-                                        class="text-danger">*</span></label>
-                                <input name="customModuleTitle" type="text" data-ng-model="item.title"
-                                    class="form-control" required />
-                                <label for="customModuleValue" class="control-label">value<span
-                                        class="text-danger">*</span></label>
-                                <input name="customModuleValue-{{$index}}" id="customModuleValue{{$index}}" type="text"
-                                    data-ng-model="item.value" class="form-control" required />
+                            <div style="padding: 12px;">
+                                <h6 style="margin-top: 0px;">Layer {{$index +1}}</h6>
+
+                                <div data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleTitle-'+$index].$invalid && editFunnelWidgetForm['customModuleTitle-'+$index].$touched }">
+                                    <label for="customModuleTitle" class="control-label">Title<span
+                                            class="text-danger">*</span></label>
+                                    <input name="customModuleTitle-{{$index}}" type="text" data-ng-model="item.title"
+                                        class="form-control" required />
+                                </div>
+
+                                <div data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
+                                    <label for="customModuleValue" class="control-label">value<span
+                                            class="text-danger">*</span></label>
+                                    <input name="customModuleValue-{{$index}}" id="customModuleValue{{$index}}"
+                                        type="text" data-ng-model="item.value" class="form-control" required />
+
+                                </div>
+
                                 <div data-cs-messages="editFunnelWidgetForm.layer"></div>
                                 <button type="button" data-ng-click="removeLayer($index)" id="fsr-module-{{ $index }}"
                                     class="btn-sm btn btn-link btn-conditional-delete"
-                                    style=" position: absolute; top:15%" data-ng-if="$index !== 0">
+                                    style=" position: absolute; top:4%" data-ng-if="$index !== 0">
                                     <span class="icon icon-close text-danger"></span>
                                 </button>
                             </div>
