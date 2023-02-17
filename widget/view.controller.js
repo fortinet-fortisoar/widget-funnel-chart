@@ -4,9 +4,9 @@
     .module('cybersponse')
     .controller('funnelChart100DevCtrl', funnelChart100DevCtrl);
 
-  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'Modules', 'PagedCollection'];
+  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection','CommonUtils'];
 
-  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, Modules, PagedCollection) {
+  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, CommonUtils) {
     __init()
 
     function __init() {
@@ -88,22 +88,16 @@
     function createFunnel() {
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
-      var red = 30;
-      // var green = 130;
-      // 
 
-      var green = 235 - (($scope.config.layers.length - 1) * 35);
-      var blue = 240;
-      var parentDiv = document.getElementById('parentDiv' + $scope.config.title)
+      var parentDiv = document.getElementById($scope.config.wid)
 
-      parentDiv.setAttribute('style', "position: relative; z-index: 1;")
+      parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
 
       for (let i = 0; i < $scope.config.layers.length; i++) {
         var funnel = document.createElement('div');
         var leftTaper = document.createElement('div');
         var centerTaper = document.createElement('div');
         var rightTaper = document.createElement('div');
-
 
         funnel.setAttribute('class', 'position-relative funnelTop-' + ($scope.config.layers.length - i - 1));
         leftTaper.setAttribute('class', 'taper-left');
@@ -133,7 +127,6 @@
         funnel.appendChild(rightTaper);
         parentDiv.appendChild(funnel);
 
-        green += 35;
         margin = margin + 15;
         width = width - 30;
       }
