@@ -27,9 +27,10 @@
             </div>
             <div data-ng-if="config.funnelModuleType == 0">
                 <div id="funnelModuleType0" class="form-group" data-ng-if="modules">
-                    <div data-ng-repeat="item in config.layers"class="form-group dashed-border-section" style="position:relative;">
-                        <div  style="padding: 12px;">
-                            <h6>Layer {{$index +1}}</h6>
+                    <div data-ng-repeat="item in config.layers" class="form-group dashed-border-section"
+                        style="position:relative;">
+                        <div style="padding: 12px;">
+                            <h6 style="margin-top: 10px;">Layer {{$index +1}}</h6>
                             <label class="control-label">Title<span class="text-danger">*</span></label>
                             <input name="layer" type="text" data-ng-model="item.title" class="form-control" required />
                             <div
@@ -54,8 +55,8 @@
                                 </div>
                             </div>
                             <button type="button" data-ng-click="removeLayer($index)" id="fsr-module-{{ $index }}"
-                                class="btn-sm btn btn-link btn-conditional-delete" style="position: absolute;"
-                                data-ng-if="$index !== 0">
+                                class="btn-sm btn btn-link btn-conditional-delete" 
+                                style="position: absolute; top:15%" data-ng-if="$index !== 0">
                                 <span class="icon icon-close text-danger"></span>
                             </button>
                         </div>
@@ -64,12 +65,11 @@
                 <div data-ng-if="config.funnelModuleType !== undefined">
                     <div class="row margin-left-0 margin-top-lg margin-bottom-lg" style="padding-left: 5px;"
                         data-ng-hide="processing || disabled">
-                        <button data-ng-click="addLayer()" type="button" class="btn-btn btn-sm btn-primary">+ &nbsp;Add
+                        <button data-ng-click="addLayer()" type="button" class="btn btn-primary btn-xs">+ &nbsp;Add
                             Layer</button>
                     </div>
                 </div>
-                <div class="alert-danger alert margin-bottom-xlg margin-top-md"
-                    data-ng-if="maxlayers === true">
+                <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="maxlayers === true">
                     <span>Maximum 4 layers can be added.</span>
                 </div>
             </div>
@@ -78,13 +78,13 @@
                 <div class="form-group" data-ng-if="modules"
                     data-ng-class="{ 'has-error': editFunnelWidgetForm.customModule[$index].$invalid && editFunnelWidgetForm.customModule[$index].$touched }">
                     <label for="customModule" class="control-label">Data Source<span class="text-danger">*</span>
-                        </label>
-                        <select name="customModule{{$index}}" id="customModule" class="form-control"
-                            data-ng-options="module.type as module.name for module in modules"
-                            data-ng-model="config.customModule"
-                            data-ng-change="loadAttributesForCustomModule(config.customModule)" required>
-                            <option value="">Select an Option</option>
-                        </select>
+                    </label>
+                    <select name="customModule{{$index}}" id="customModule" class="form-control"
+                        data-ng-options="module.type as module.name for module in modules"
+                        data-ng-model="config.customModule"
+                        data-ng-change="loadAttributesForCustomModule(config.customModule)" required>
+                        <option value="">Select an Option</option>
+                    </select>
                 </div>
 
                 <div class="form-group" data-ng-if="config.customModule !== undefined">
@@ -119,7 +119,7 @@
                             style="position:relative;">
                             <div style="padding: 12px;"
                                 data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
-                                <h6>Layer {{$index +1}}</h6>
+                                <h6 style="margin-top: 10px;">Layer {{$index +1}}</h6>
                                 <label for="customModuleTitle" class="control-label">Title<span
                                         class="text-danger">*</span></label>
                                 <input name="customModuleTitle" type="text" data-ng-model="item.title"
@@ -139,13 +139,12 @@
 
                         <div class="row margin-left-0 margin-top-lg margin-bottom-lg" style="padding-left: 5px;"
                             data-ng-hide="processing || disabled">
-                            <button data-ng-click="addLayer()" type="button" class="btn-btn btn-sm btn-primary">+
+                            <button data-ng-click="addLayer()" type="button" class="btn btn-primary btn-xs">+
                                 &nbsp;ADD
                                 Layer
                             </button>
                         </div>
-                        <div class="alert-danger alert margin-bottom-xlg margin-top-md"
-                            data-ng-if="maxlayers === true">
+                        <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="maxlayers === true">
                             <span>Maximum 4 layers can be added.</span>
                         </div>
                     </div>
