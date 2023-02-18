@@ -1,0 +1,71 @@
+.taper-right {
+  height: 0px;
+  border-style: solid;
+  border-width: 50px 15px 0 0px;
+}
+ 
+.taper-left {
+  height: 0px;
+  border-style: solid;
+  border-width: 50px 0px 0px 15px;
+}
+ 
+.taper-center {
+  height: 50px;
+  text-align: center;
+  color: black;
+  padding-top:20px;
+}
+
+.funnelTop-3::before {
+  content: "";
+  height: 30px;
+  width: 255px;
+  background-color: #005A61;
+  position: absolute;
+  top: -15px;
+  border-radius: 50%;
+}
+
+.funnelTop-2::before {
+  content: "";
+  height: 30px;
+  width: 225px;
+  background-color: #005A61;
+  position: absolute;
+  top: -15px;
+  border-radius: 50%;
+}
+
+.funnelTop-1::before {
+  content: "";
+  height: 30px;
+  width: 195px;
+  background-color: #005A61;
+  position: absolute;
+  top: -15px;
+  border-radius: 50%;
+}
+
+.funnelTop-0::before {
+  content: "";
+  height: 30px;
+  width: 165px;
+  background-color: #005A61;
+  position: absolute;
+  top: -15px;
+  border-radius: 50%;
+}
+.cont::after {
+  content: "";
+  height: 35px;
+  width: inherit;
+  background-color: inherit;
+  position: absolute;
+  top: 32px;
+  border-radius: 50%;
+  left: 15px;
+  z-index: -1;
+  margin-bottom: 10px;
+}
+
