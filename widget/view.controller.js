@@ -4,9 +4,9 @@
     .module('cybersponse')
     .controller('funnelChart100DevCtrl', funnelChart100DevCtrl);
 
-  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection','CommonUtils'];
+  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$filter'];
 
-  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, CommonUtils) {
+  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $filter) {
     __init()
 
     function __init() {
@@ -17,10 +17,10 @@
     }
 
     $scope.color = {
-      layer1 : '#0598A1',
-      layer2 : '#20B4BD',
-      layer3 : '#36CDD7',
-      layer4 : '#3ACAD3'
+      layer1: '#0598A1',
+      layer2: '#20B4BD',
+      layer3: '#36CDD7',
+      layer4: '#3ACAD3'
     }
 
     //to populate funnel for custom module
@@ -32,15 +32,15 @@
       var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
       pagedTotalData.loadByPost(filters).then(function () {
         $scope.config.layers.forEach((layer, index) => {
-          var tempArray = layer.value.split('.');
-          if(tempArray.length > 1){
+          var nestedKeysArray = layer.value.split('.');
+          if (nestedKeysArray.length > 1) {
             var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
-            tempArray.forEach(function (value){
+            nestedKeysArray.forEach(function (value) {
               data = data[value];
             })
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
-          else{
+          else {
             var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
@@ -62,14 +62,16 @@
         layer.query.aggregates = [countAggregate];
         layer.query.limit = ALL_RECORDS_SIZE;
         var _queryObj = new Query(layer.query);
-        var promise = getResourceData(layer.value, _queryObj).then(function (result) {
-          if (result && result['hydra:member'] && result['hydra:member'].length > 0) {
-            $scope.config.moduleList.push({ 'title': layer.title, 'data': result['hydra:member'][0][layer.value] })
-          }
-        });
+        var promise = getResourceData(layer.value, _queryObj);
         promises.push(promise);
       });
-      $q.all(promises).then(function () {
+      $q.all(promises).then(function (result) {
+
+        $scope.config.layers.forEach((layer, index) => {
+          if (result[index] && result[index]['hydra:member'] && result[index]['hydra:member'].length > 0) {
+            $scope.config.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:member'][0][layer.value] })
+          }
+        })
         createFunnel();
       })
     }
@@ -87,7 +89,7 @@
     function createFunnel() {
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
-      var parentDiv = document.getElementById("funnelChartParentDiv"+$scope.config.wid)
+      var parentDiv = document.getElementById("funnelChartParentDiv" + $scope.config.wid)
       parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
       for (let i = 0; i < $scope.config.layers.length; i++) {
         var funnel = document.createElement('div');
@@ -101,18 +103,19 @@
         rightTaper.setAttribute('class', 'taper-right');
 
         // set colour for funnel
-        leftTaper.setAttribute('style', 'border-color:' + $scope.color['layer'+(i+1)] + ' transparent');
-        rightTaper.setAttribute('style', 'border-color:' + $scope.color['layer'+(i+1)] + ' transparent');
-        centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer'+(i+1)] +'; width :' + width + 'px;');
+        leftTaper.setAttribute('style', 'border-color:' + $scope.color['layer' + (i + 1)] + ' transparent');
+        rightTaper.setAttribute('style', 'border-color:' + $scope.color['layer' + (i + 1)] + ' transparent');
+        centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer' + (i + 1)] + '; width :' + width + 'px;');
         funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
-        var innerTxt =  document.createElement('div');
-        innerTxt.innerHTML= $scope.config.moduleList[i].title;
+        var innerTxt = document.createElement('div');
+        innerTxt.innerHTML = $scope.config.moduleList[i].title;
 
         innerTxt.setAttribute('style', "text-overflow: ellipsis;overflow: hidden;white-space: nowrap; padding-left:15px; padding-right:15px")
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
         var count = document.createElement('div');
+        // var dataIn
         count.innerHTML = $scope.config.moduleList[i].data;
 
         centerTaper.appendChild(innerTxt);
