@@ -25,7 +25,7 @@
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
       })
-      $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: '', title: '' }];
+      $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
     }
 
     init();
@@ -37,7 +37,7 @@
       delete $scope.config.customModule;
       $scope.maxlayers = false;
       $scope.config.layers = [];
-      $scope.config.layers.push({ value: '', title: '' });
+      $scope.config.layers.push({ value: undefined, title: '' });
     }
 
     $scope.$watch('config.customModule', function (oldValue, newValue) {
@@ -92,7 +92,7 @@
     function addLayer() {
       if ($scope.config.layers.length < 4) {
         $scope.config.layers.push({
-          value: '',
+          value: undefined,
           title: ''
         });
       }

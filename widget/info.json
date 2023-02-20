@@ -3,13 +3,19 @@
 	"title": "Funnel Chart",
 	"subTitle": "Funnel Chart",
 	"version": "1.0.0",
+	"published_date": 1676873166,
+
 	"metadata": {
-		"description": "",
+		"description": "To display number of records in a selected module.",
+		"help_online":"",
 		"pages": [
 			"Dashboard"
 		],
+		"snapshots": [
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/funnel-chart.png"
+        ],
 		"certified": "No",
-		"publisher": "",
+		"publisher": "Fortinet",
 		"compatibility": [
 			"7.3.0"
 		]
