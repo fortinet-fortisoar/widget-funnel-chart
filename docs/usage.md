@@ -8,6 +8,7 @@
 **1. Module Type : Single Module**
 
 Select the single module option if all the records to be rendered are in a single record of a certain field of the module.
+
 ![](./media/custom-module.png)
 
 1. Select the data source(module) to fetch the data from.
@@ -15,9 +16,18 @@ Select the single module option if all the records to be rendered are in a singl
 ![](./media/filter-for-single-module.png)
 3. Select the field (the field must be of type json.)
     *Below is an example of how the field could be.*
-
-    ![](./media/custom-module-field.png)
-
+    
+    ```JSON 
+    {
+        "alert": 500,
+        "incident": "aa",
+        "indicators": {
+            "id": {
+                "count": 40
+            }
+        }
+    }
+    ```
 4. In the value section of the layer, mention the key for which the value is the data to be rendered. 
     eg. for the above json data, to reder Alert and Indicator's data populate the 'value' field as following
     ![](./media/custom-module-layer.png)
