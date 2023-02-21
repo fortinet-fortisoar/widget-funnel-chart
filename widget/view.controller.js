@@ -2,11 +2,11 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('funnelChart100DevCtrl', funnelChart100DevCtrl);
+    .controller('funnelChart100Ctrl', funnelChart100Ctrl);
 
-  funnelChart100DevCtrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$filter'];
+  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$filter'];
 
-  function funnelChart100DevCtrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $filter) {
+  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $filter) {
     __init()
 
     function __init() {
