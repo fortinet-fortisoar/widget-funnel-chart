@@ -25,12 +25,12 @@
 
     //to populate funnel for custom module
     function populateCustomData() {
-      $scope.config.moduleList = [];
       var filters = {
         query: $scope.config.query
       };
       var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
       pagedTotalData.loadByPost(filters).then(function () {
+        $scope.config.moduleList = [];
         $scope.config.layers.forEach((layer, index) => {
           var nestedKeysArray = layer.value.split('.');
           if (nestedKeysArray.length > 1) {
@@ -52,7 +52,6 @@
     //populate data for fsr modules
     function populateData() {
       var promises = [];
-      $scope.config.moduleList = [];
       $scope.config.layers.forEach((layer, index) => {
         var countAggregate = {
           alias: layer.value,
@@ -66,7 +65,7 @@
         promises.push(promise);
       });
       $q.all(promises).then(function (result) {
-
+        $scope.config.moduleList = [];
         $scope.config.layers.forEach((layer, index) => {
           if (result[index] && result[index]['hydra:member'] && result[index]['hydra:member'].length > 0) {
             $scope.config.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:member'][0][layer.value] })
@@ -115,8 +114,15 @@
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
         var count = document.createElement('div');
-        // var dataIn
-        count.innerHTML = $scope.config.moduleList[i].data;
+        var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
+
+        if(isNaN(dataIsNumberCheck)){
+          count.innerHTML = '0';
+          count.setAttribute("title", "Invalid Data")
+        }
+        else{
+          count.innerHTML = $scope.config.moduleList[i].data;
+        }
 
         centerTaper.appendChild(innerTxt);
         centerTaper.appendChild(count);
