@@ -2,11 +2,11 @@
 
 - **Version**: 1.0.0
 
-- **Certified**: Yes
+- **Certified**: No
 
 - **Publisher**: Fortinet  
 
-- **Compatibility**: 7.3.0 and later
+- **Compatibility**: 7.2.2 and later
 
 - **Applicable**: Dashboards
 

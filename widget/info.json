@@ -12,10 +12,12 @@
 			"Dashboard"
 		],
 		"snapshots": [
-            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/funnel-chart.png"
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/edit-controller-custom-module.png",
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/edit-controller-fsr-module.png",
+			"https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/funnel-chart.png"
         ],
 		"certified": "No",
-		"publisher": "Fortinet",
+		"publisher": "Community",
 		"compatibility": [
 			"7.3.0"
 		]
