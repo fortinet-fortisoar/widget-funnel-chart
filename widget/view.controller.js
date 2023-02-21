@@ -118,7 +118,8 @@
 
         if(isNaN(dataIsNumberCheck)){
           count.innerHTML = '0';
-          count.setAttribute("title", "Invalid Data")
+          count.setAttribute("title", "Invalid Data");
+          // count.setAttribute("style", "color: red");
         }
         else{
           count.innerHTML = $scope.config.moduleList[i].data;

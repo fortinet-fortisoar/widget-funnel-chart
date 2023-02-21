@@ -32,7 +32,7 @@ Note:: If the value of the given key is not a number, ie. it is either the key i
 "Across Modules" Module type lets you select the module and it displays the count of records for the module based on the filters given
 
 
-**Widget For All 4 Layers**
+**Widget**
 
 ![](./media/funnel.png)
 
