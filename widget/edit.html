@@ -75,14 +75,11 @@
                         data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleTitle-'+$index].$invalid && editFunnelWidgetForm['moduleTitle-'+$index].$touched }">
                         <label for="moduleTitle" class="control-label">Title<span class="text-danger">*</span>
                         </label>
-                        <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control"
-                            required />
+                        <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control" required />
                     </div>
                     <!-- Show value field only when funnelModuleType value is 1-->
                     <div data-ng-if="config.funnelModuleType == 1">
-
-                        <div
-                            data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
+                        <div data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
                             <label for="customModuleValue" class="control-label">value<span class="text-danger">*</span>
                             </label>
                             <input name="customModuleValue-{{$index}}" id="customModuleValue{{$index}}" type="text"

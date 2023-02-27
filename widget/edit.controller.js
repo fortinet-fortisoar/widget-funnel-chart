@@ -61,6 +61,7 @@
       var entity = new Entity($scope.config.customModule);
       entity.loadFields().then(function () {
         for (var key in entity.fields) {
+          //filtering out JSON fields 
           if (entity.fields[key].type === "object") {
             $scope.objectFields.push(entity.fields[key]);
           }
