@@ -22,7 +22,7 @@
                 data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" required>
                 <option value="">Select an Option</option>
             </select>
-        </div> 
+        </div>
         <!-- Show this block only when funnelModuleType value is 1-->
         <div data-ng-if="config.funnelModuleType == 1">
             <div class="form-group" data-ng-if="modules"
@@ -38,43 +38,47 @@
                 </select>
             </div>
             <div class="form-group" data-ng-if="config.customModule !== undefined">
-                <div class="margin-top-md margin-bottom-md">
-                    <label class="control-label">Filter Record Which Contains The Data
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
-                        data-reset-field="$parent.fields" data-mode="'queryFilters'"
-                        data-ng-model="$parent.config.query" data-parent-form="editFunnelWidgetForm"
-                        data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
-                        data-form-name="'editFunnelWidgetForm'">
+                <div class="form-group" data-ng-if="objectFields.length > 0">
+                    <div class="margin-top-md margin-bottom-md">
+                        <label class="control-label">Filter Record Which Contains The JSON Data
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
+                            data-reset-field="$parent.fields" data-mode="'queryFilters'"
+                            data-ng-model="$parent.config.query" data-parent-form="editFunnelWidgetForm"
+                            data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
+                            data-form-name="'editFunnelWidgetForm'">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group" data-ng-if="fieldsArray.length > 0">
+
                     <label class="control-label">Select field for data source
                         <span class="text-danger">*</span>
                     </label>
-                    <select class="form-control" data-ng-options="field.name as field.title for field in fieldsArray"
+                    <select class="form-control" data-ng-options="field.name as field.title for field in objectFields"
                         data-ng-model="config.customModuleField" required>
                         <option value="">Select an Option</option>
                     </select>
                 </div>
+                <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="objectFields.length == 0">
+                    <span>Select a module wich contains JSON field</span>
+                </div>
             </div>
         </div>
-        <div class="mertics-widget-border padding-top-md padding-bottom-md"></div>
+        <div class=" mertics-widget-border padding-top-md padding-bottom-md"></div>
         <div
             data-ng-if="(config.funnelModuleType == 1 && config.customModuleField !== undefined) || (config.funnelModuleType == 0 && modules)">
-            <div class="form-group dashed-border-section" data-ng-repeat="item in config.layers" style="position:relative;">
+            <div class="form-group dashed-border-section" data-ng-repeat="item in config.layers"
+                style="position:relative;">
                 <div style="padding: 12px;">
                     <h6 style="margin-top: 0px;">Layer {{$index +1}}</h6>
-                    <div data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleTitle-'+$index].$invalid && editFunnelWidgetForm['moduleTitle-'+$index].$touched }">
+                    <div
+                        data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleTitle-'+$index].$invalid && editFunnelWidgetForm['moduleTitle-'+$index].$touched }">
                         <label for="moduleTitle" class="control-label">Title<span class="text-danger">*</span>
                         </label>
-                        <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control"
-                            required />
+                        <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control" required />
                     </div>
                     <!-- Show value field only when funnelModuleType value is 1-->
                     <div data-ng-if="config.funnelModuleType == 1">
-
                         <div data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
                             <label for="customModuleValue" class="control-label">value<span class="text-danger">*</span>
                             </label>
@@ -82,11 +86,12 @@
                                 data-ng-model="item.value" class="form-control" required />
                         </div>
                         <div data-cs-messages="editFunnelWidgetForm.layer"></div>
-                    </div> 
+                    </div>
                     <!-- Show data sources only when funnelModuleType value is 0-->
                     <div data-ng-if="config.funnelModuleType == 0">
                         <div id="funnelModuleType0" class="form-group">
-                            <div data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleValue-' + $index].$invalid && editFunnelWidgetForm['moduleValue-' + $index].$touched }">
+                            <div
+                                data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleValue-' + $index].$invalid && editFunnelWidgetForm['moduleValue-' + $index].$touched }">
                                 <label for="moduleValue" class="control-label"> Data Source <span
                                         class="text-danger">*</span>
                                 </label>
@@ -129,6 +134,7 @@
         <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary">
             <i class="icon icon-check margin-right-sm"></i>Save
         </button>
-        <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i class="icon icon-close margin-right-sm"></i>Close</button>
+        <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
+                class="icon icon-close margin-right-sm"></i>Close</button>
     </div>
 </form>
