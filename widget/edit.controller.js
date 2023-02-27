@@ -30,7 +30,6 @@
 
     init();
 
-
     function onChangeModuleType() {
       delete $scope.config.query;
       delete $scope.config.customModuleField;
@@ -58,12 +57,12 @@
     function loadAttributesForCustomModule() {
       $scope.fields = [];
       $scope.fieldsArray = [];
-      $scope.pickListFields = [];
+      $scope.objectFields = [];
       var entity = new Entity($scope.config.customModule);
       entity.loadFields().then(function () {
         for (var key in entity.fields) {
-          if (entity.fields[key].type === "picklist") {
-            $scope.pickListFields.push(entity.fields[key]);
+          if (entity.fields[key].type === "object") {
+            $scope.objectFields.push(entity.fields[key]);
           }
         }
         $scope.fields = entity.getFormFields();
