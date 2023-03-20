@@ -15,16 +15,16 @@
         </div>
         <div
             data-ng-class="{ 'has-error': editFunnelWidgetForm.funnelModuleType.$invalid && editFunnelWidgetForm.funnelModuleType.$touched }">
-            <label for="funnelModuleType" class="control-label">Select Module Type</label><span
+            <label for="funnelModuleType" class="control-label">Select Dataset</label><span
                 class="text-danger">*</span>
             <select name="funnelModuleType" id="funnelModuleType" class="form-control" style="width:30%"
-                data-ng-options="key as value for (key, value) in funnelModuleType.type"
+                data-ng-options="funnelModuleType for funnelModuleType in funnelModuleType.type"
                 data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" required>
                 <option value="">Select an Option</option>
             </select>
         </div>
         <!-- Show this block only when funnelModuleType value is 1-->
-        <div data-ng-if="config.funnelModuleType == 1">
+        <div data-ng-if="config.funnelModuleType == 'Single Module'">
             <div class="form-group" data-ng-if="modules"
                 data-ng-class="{ 'has-error': editFunnelWidgetForm.customModule.$invalid && editFunnelWidgetForm.customModule.$touched }">
                 <label for="customModule" class="control-label">Data Source
@@ -66,7 +66,7 @@
         </div>
         <div class=" mertics-widget-border padding-top-md padding-bottom-md"></div>
         <div
-            data-ng-if="(config.funnelModuleType == 1 && config.customModuleField !== undefined) || (config.funnelModuleType == 0 && modules)">
+            data-ng-if="(config.funnelModuleType == 'Single Module' && config.customModuleField !== undefined) || (config.funnelModuleType == 'Across Modules' && modules)">
             <div class="form-group dashed-border-section" data-ng-repeat="item in config.layers"
                 style="position:relative;">
                 <div style="padding: 12px;">
@@ -78,7 +78,7 @@
                         <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control" required />
                     </div>
                     <!-- Show value field only when funnelModuleType value is 1-->
-                    <div data-ng-if="config.funnelModuleType == 1">
+                    <div data-ng-if="config.funnelModuleType == 'Single Module'">
                         <div data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
                             <label for="customModuleValue" class="control-label">value<span class="text-danger">*</span>
                             </label>
@@ -88,7 +88,7 @@
                         <div data-cs-messages="editFunnelWidgetForm.layer"></div>
                     </div>
                     <!-- Show data sources only when funnelModuleType value is 0-->
-                    <div data-ng-if="config.funnelModuleType == 0">
+                    <div data-ng-if="config.funnelModuleType == 'Across Modules' ">
                         <div id="funnelModuleType0" class="form-group">
                             <div
                                 data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleValue-' + $index].$invalid && editFunnelWidgetForm['moduleValue-' + $index].$touched }">

@@ -4,18 +4,9 @@
     .module('cybersponse')
     .controller('funnelChart100Ctrl', funnelChart100Ctrl);
 
-  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$filter'];
+  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService'];
 
-  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $filter) {
-    __init()
-
-    function __init() {
-      if ($scope.config.funnelModuleType == 0) { populateData(); }
-      else {
-        populateCustomData();
-      }
-    }
-
+  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
@@ -23,8 +14,19 @@
       layer4: '#3ACAD3'
     }
 
+
+    __init()
+
+    function __init() {
+      if ($scope.config.funnelModuleType == 'Across Modules') { populateData(); }
+      else {
+        populateCustomData();
+      }
+    }
+
     //to populate funnel for custom module
     function populateCustomData() {
+
       var filters = {
         query: $scope.config.query
       };
@@ -75,6 +77,7 @@
       })
     }
 
+
     function getResourceData(resource, queryObject) {
       var defer = $q.defer();
       $resource(API.QUERY + resource).save(queryObject.getQueryModifiers(), queryObject.getQuery(true)).$promise.then(function (response) {
@@ -114,14 +117,14 @@
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
         var count = document.createElement('div');
+        count.setAttribute('id', $scope.config.wid+'layer-'+(i+1)+"-count")
         var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
 
-        if(isNaN(dataIsNumberCheck)){
+        if (isNaN(dataIsNumberCheck)) {
           count.innerHTML = '0';
           count.setAttribute("title", "Invalid Data");
-          // count.setAttribute("style", "color: red");
         }
-        else{
+        else {
           count.innerHTML = $scope.config.moduleList[i].data;
         }
 
