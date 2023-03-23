@@ -55,6 +55,7 @@
     function populateData() {
       var promises = [];
       $scope.config.layers.forEach((layer, index) => {
+        //qurey to get count
         var countAggregate = {
           alias: layer.value,
           field: '*',
@@ -94,11 +95,14 @@
       var parentDiv = document.getElementById("funnelChartParentDiv" + $scope.config.wid)
       parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
       for (let i = 0; i < $scope.config.layers.length; i++) {
+
+        //create divs for left taper,  right taper and center
         var funnel = document.createElement('div');
         var leftTaper = document.createElement('div');
         var centerTaper = document.createElement('div');
         var rightTaper = document.createElement('div');
 
+        //set class
         funnel.setAttribute('class', 'position-relative funnelTop-' + ($scope.config.layers.length - i - 1));
         leftTaper.setAttribute('class', 'taper-left');
         centerTaper.setAttribute('class', 'taper-center cont');
@@ -110,14 +114,15 @@
         centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer' + (i + 1)] + '; width :' + width + 'px;');
         funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
+        //Change inner text to the title
         var innerTxt = document.createElement('div');
         innerTxt.innerHTML = $scope.config.moduleList[i].title;
-
         innerTxt.setAttribute('style', "text-overflow: ellipsis;overflow: hidden;white-space: nowrap; padding-left:15px; padding-right:15px")
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
+        //setting count to the perticular layer
         var count = document.createElement('div');
-        count.setAttribute('id', $scope.config.wid+'layer-'+(i+1)+"-count")
+        count.setAttribute('id', $scope.config.wid+'layer-'+(i+1)+"-count")//set unique id to the element
         var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
 
         if (isNaN(dataIsNumberCheck)) {
@@ -128,6 +133,7 @@
           count.innerHTML = $scope.config.moduleList[i].data;
         }
 
+        //append the child to parent div
         centerTaper.appendChild(innerTxt);
         centerTaper.appendChild(count);
         funnel.appendChild(leftTaper);
