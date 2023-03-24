@@ -117,7 +117,7 @@
         //Change inner text to the title
         var innerTxt = document.createElement('div');
         innerTxt.innerHTML = $scope.config.moduleList[i].title;
-        innerTxt.setAttribute('style', "text-overflow: ellipsis;overflow: hidden;white-space: nowrap; padding-left:15px; padding-right:15px")
+        innerTxt.setAttribute('class', "inner-text")
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
         //setting count to the perticular layer
