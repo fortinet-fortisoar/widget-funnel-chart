@@ -114,7 +114,7 @@
         centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer' + (i + 1)] + '; width :' + width + 'px;');
         funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
-        //Change inner text to the title
+        //Change inner text 
         var innerTxt = document.createElement('div');
         innerTxt.innerHTML = $scope.config.moduleList[i].title;
         innerTxt.setAttribute('class', "inner-text")
@@ -123,6 +123,7 @@
         //setting count to the perticular layer
         var count = document.createElement('div');
         count.setAttribute('id', $scope.config.wid+'layer-'+(i+1)+"-count")//set unique id to the element
+        count.setAttribute('style', 'font-weight:bold;')
         var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
 
         if (isNaN(dataIsNumberCheck)) {
