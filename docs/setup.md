@@ -14,7 +14,7 @@
 | Fields                                   | Description                              |
 | ---------------------------------------- | ---------------------------------------- |
 | Title                                    | Specify the heading or title of the visual depiction of each record node in the group. |
-| Module Type                              | Populate the records with FSR modules or a custom single module|
+| Dataset                              | Populate the records with FSR modules or a custom single module|
 
 | Single Module                            | Description                              |
 | ---------------------------------------- | ---------------------------------------- |

@@ -5,9 +5,9 @@
 
 **Funnel Chart Widget Edit View**
 
-**1. Module Type : Single Module**
+**1. Dataset : Single Module**
 
-Select the single module option if all the records to be rendered are in a single record of a certain field of the module.
+Select the "Single Module" option if all the records to be rendered are in a single record of a certain field of the module.
 
 ![](./media/custom-module.png)
 
@@ -32,14 +32,14 @@ Select the single module option if all the records to be rendered are in a singl
     eg. for the above json data, to reder Alert and Indicator's data populate the 'value' field as following
     ![](./media/custom-module-layer.png)
 
-Note:: If the value of the given key is not a number, ie. it is either the key is invalid or the value isnt a number, then '0' will be displayed and on hover invalid data will be shown.
+Note:  If the value of a given key is not numeric then by default '0' (zero) will be displayed and user will see an error "Invalid data" hover on .
 
 
-**2. Module Type : Across Modules**
+**2. Dataset : Across Modules**
 
 ![](./media/fsr-modules.png)
 
-"Across Modules" Module type lets you select the module and it displays the count of records for the module based on the filters given
+"Across Modules" Dataset lets you select the module and it displays the count of records for the module based on the filters given
 
 
 **Widget**
@@ -47,4 +47,4 @@ Note:: If the value of the given key is not a number, ie. it is either the key i
 ![](./media/funnel.png)
 
 
-**Note** : Maximum 4 layers can be added for any of the selected module types.
+**Note** : Maximum 4 layers can be added for any of the selected Datasets.

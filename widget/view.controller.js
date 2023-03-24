@@ -4,18 +4,9 @@
     .module('cybersponse')
     .controller('funnelChart100Ctrl', funnelChart100Ctrl);
 
-  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$filter'];
+  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService'];
 
-  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $filter) {
-    __init()
-
-    function __init() {
-      if ($scope.config.funnelModuleType == 0) { populateData(); }
-      else {
-        populateCustomData();
-      }
-    }
-
+  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
@@ -23,8 +14,19 @@
       layer4: '#3ACAD3'
     }
 
+
+    __init()
+
+    function __init() {
+      if ($scope.config.funnelModuleType == 'Across Modules') { populateData(); }
+      else {
+        populateCustomData();
+      }
+    }
+
     //to populate funnel for custom module
     function populateCustomData() {
+
       var filters = {
         query: $scope.config.query
       };
@@ -53,6 +55,7 @@
     function populateData() {
       var promises = [];
       $scope.config.layers.forEach((layer, index) => {
+        //qurey to get count
         var countAggregate = {
           alias: layer.value,
           field: '*',
@@ -75,6 +78,7 @@
       })
     }
 
+
     function getResourceData(resource, queryObject) {
       var defer = $q.defer();
       $resource(API.QUERY + resource).save(queryObject.getQueryModifiers(), queryObject.getQuery(true)).$promise.then(function (response) {
@@ -91,11 +95,14 @@
       var parentDiv = document.getElementById("funnelChartParentDiv" + $scope.config.wid)
       parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
       for (let i = 0; i < $scope.config.layers.length; i++) {
+
+        //create divs for left taper,  right taper and center
         var funnel = document.createElement('div');
         var leftTaper = document.createElement('div');
         var centerTaper = document.createElement('div');
         var rightTaper = document.createElement('div');
 
+        //set class
         funnel.setAttribute('class', 'position-relative funnelTop-' + ($scope.config.layers.length - i - 1));
         leftTaper.setAttribute('class', 'taper-left');
         centerTaper.setAttribute('class', 'taper-center cont');
@@ -107,24 +114,27 @@
         centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer' + (i + 1)] + '; width :' + width + 'px;');
         funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
+        //Change inner text 
         var innerTxt = document.createElement('div');
         innerTxt.innerHTML = $scope.config.moduleList[i].title;
-
-        innerTxt.setAttribute('style', "text-overflow: ellipsis;overflow: hidden;white-space: nowrap; padding-left:15px; padding-right:15px")
+        innerTxt.setAttribute('class', "inner-text")
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
+        //setting count to the perticular layer
         var count = document.createElement('div');
+        count.setAttribute('id', $scope.config.wid+'layer-'+(i+1)+"-count")//set unique id to the element
+        count.setAttribute('style', 'font-weight:bold;')
         var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
 
-        if(isNaN(dataIsNumberCheck)){
+        if (isNaN(dataIsNumberCheck)) {
           count.innerHTML = '0';
           count.setAttribute("title", "Invalid Data");
-          // count.setAttribute("style", "color: red");
         }
-        else{
+        else {
           count.innerHTML = $scope.config.moduleList[i].data;
         }
 
+        //append the child to parent div
         centerTaper.appendChild(innerTxt);
         centerTaper.appendChild(count);
         funnel.appendChild(leftTaper);
