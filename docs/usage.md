@@ -32,7 +32,7 @@ Select the "Single Module" option if all the records to be rendered are in a sin
     eg. for the above json data, to reder Alert and Indicator's data populate the 'value' field as following
     ![](./media/custom-module-layer.png)
 
-Note:  If the value of a given key is not numeric then by default '0' (zero) will be displayed and user will see an error "Invalid data" hover on .
+Note:  If the value of a given key is not numeric then by default '0' (In this case for incident) will be displayed and user will see an error "Invalid data" hover on .
 
 
 **2. Dataset : Across Modules**
