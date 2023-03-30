@@ -15,13 +15,38 @@
         </div>
         <div
             data-ng-class="{ 'has-error': editFunnelWidgetForm.funnelModuleType.$invalid && editFunnelWidgetForm.funnelModuleType.$touched }">
-            <label for="funnelModuleType" class="control-label">Select Dataset</label><span
-                class="text-danger">*</span>
-            <select name="funnelModuleType" id="funnelModuleType" class="form-control" style="width:30%"
-                data-ng-options="funnelModuleType for funnelModuleType in funnelModuleType.type"
-                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" required>
-                <option value="">Select an Option</option>
-            </select>
+            <label for="funnelModuleType" class="control-label">Select Dataset</label><span class="text-danger">*
+                <span
+                    data-uib-tooltip="Select the 'Single Module' option if all the records to be rendered are in a single record of a certain field of the module.
+                'Across Modules' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
+                    data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+            </span>
+
+            <!-- Radio Button -->
+
+            <label for="info" class="control-label margin-top-sm"
+                data-ng-if="config.stopStateTitle.length > 0 && config.slaMappedOn.length > 0 && config.metItemvalue.length > 0 ">Get Count from<span
+                    class="text-danger">*</span>
+                </label>
+            <div class="row margin-bottom-sm">
+                <div class="col-md-6 padding-right-0">
+                    <div class="radio">
+                        <label><input id="JsonField" name="JsonField" type="radio"
+                                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" value="Single Module">&nbsp;&nbsp;Single Json Record</label>
+                                <span data-uib-tooltip="If all the records to be rendered are in a single record of a certain field of the module."
+                                    data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                    </div>
+                    <div class="radio">
+                        <label><input id="accrossModules" name="accrossModules" type="radio"
+                                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" value="Across Modules">&nbsp;&nbsp;Across Modules</label>
+                                <span data-uib-tooltip="To Get Count of all records from a module based on filters"
+                                data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Radio Button End -->
+
         </div>
         <!-- Show this block only when funnelModuleType value is 1-->
         <div data-ng-if="config.funnelModuleType == 'Single Module'">
@@ -30,6 +55,8 @@
                 <label for="customModule" class="control-label">Data Source
                     <span class="text-danger">*</span>
                 </label>
+                <span data-uib-tooltip="Select the Module which has JSON data"
+                    data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                 <select name="customModule" id="customModule" class="form-control"
                     data-ng-options="module.type as module.name for module in modules"
                     data-ng-model="config.customModule"
@@ -43,6 +70,8 @@
                         <label class="control-label">Filter Record Which Contains The JSON Data
                             <span class="text-danger">*</span>
                         </label>
+                        <span data-uib-tooltip="It is recommended to apply filter, that filters out 1 record, i.e. by a unique field"
+                            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                         <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
                             data-reset-field="$parent.fields" data-mode="'queryFilters'"
                             data-ng-model="$parent.config.query" data-parent-form="editFunnelWidgetForm"
@@ -51,9 +80,11 @@
                         </div>
                     </div>
 
-                    <label class="control-label">Select Field 
+                    <label class="control-label">Select Field
                         <span class="text-danger">*</span>
                     </label>
+                    <span data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
+                        data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                     <select class="form-control" data-ng-options="field.name as field.title for field in objectFields"
                         data-ng-model="config.customModuleField" required>
                         <option value="">Select an Option</option>
@@ -75,11 +106,13 @@
                         data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleTitle-'+$index].$invalid && editFunnelWidgetForm['moduleTitle-'+$index].$touched }">
                         <label for="moduleTitle" class="control-label">Title<span class="text-danger">*</span>
                         </label>
-                        <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control" required />
+                        <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control"
+                            required />
                     </div>
                     <!-- Show value field only when funnelModuleType value is 1-->
                     <div data-ng-if="config.funnelModuleType == 'Single Module'">
-                        <div data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
+                        <div
+                            data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
                             <label for="customModuleValue" class="control-label">value<span class="text-danger">*</span>
                             </label>
                             <input name="customModuleValue-{{$index}}" id="customModuleValue{{$index}}" type="text"
