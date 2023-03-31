@@ -7,7 +7,7 @@
 
 	"metadata": {
 		"description": "To display number of records in a selected module.",
-		"help_online":"",
+		"help_online":"https://github.com/fortinet-fortisoar/widget-funnel-chart/blob/release/1.0.0/README.md",
 		"pages": [
 			"Dashboard"
 		],
@@ -17,7 +17,7 @@
 			"https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/funnel-chart.png"
         ],
 		"certified": "No",
-		"publisher": "Community",
+		"publisher": "Fortinet",
 		"compatibility": [
 			"7.3.0"
 		]
