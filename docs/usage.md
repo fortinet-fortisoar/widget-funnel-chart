@@ -9,8 +9,7 @@
 
 Select the "Single Module" option if all the records to be rendered are in a single record of a certain field of the module.
 
-
-   ![](./media/custom-module.png)
+![](./media/custom-module.png)
 
 1. Select the data source(module) to fetch the data from.
 2. Use the 'Filter', to filter out the record that contains the data.

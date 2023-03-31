@@ -17,7 +17,7 @@
 			"https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/funnel-chart.png"
         ],
 		"certified": "No",
-		"publisher": "Community",
+		"publisher": "Fortinet",
 		"compatibility": [
 			"7.3.0"
 		]
