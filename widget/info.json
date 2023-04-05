@@ -1,10 +1,9 @@
 {
 	"name": "funnelChart",
 	"title": "Funnel Chart",
-	"subTitle": "Funnel Chart",
+	"subTitle": "Funnel to display Module record count.",
 	"version": "1.0.0",
 	"published_date": 1676873166,
-
 	"metadata": {
 		"description": "To display number of records in a selected module.",
 		"help_online":"https://github.com/fortinet-fortisoar/widget-funnel-chart/blob/release/1.0.0/README.md",
