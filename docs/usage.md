@@ -10,7 +10,7 @@
 Select the "Single Module" option if all the records to be rendered are in a single record of a certain field of the module.
 <div style="width: 60%">
 
-![](./media/custom-module.png)
+![image](./media/custom-module.png)
 
 </div>
 
@@ -18,7 +18,7 @@ Select the "Single Module" option if all the records to be rendered are in a sin
 2. Use the 'Filter', to filter out the record that contains the data.
     <div style="width: 60%">
     
-    ![](./media/filter-for-single-module.png)
+    ![image](./media/filter-for-single-module.png)
     
     </div>
 
@@ -39,14 +39,14 @@ Select the "Single Module" option if all the records to be rendered are in a sin
     eg. for the above json data, to reder actual and Sale's data populate the 'value' field as following
     <div style="width: 50%">
 
-    ![](./media/custom-module-layer.png)
+    ![image](./media/custom-module-layer.png)
     
     </div>
 
 
 **Example of a custom module**
 
-![](./media/custom-module-example.png)
+![image](./media/custom-module-example.png)
 
 
 **Widget**
@@ -54,7 +54,7 @@ Select the "Single Module" option if all the records to be rendered are in a sin
 This is how the data will be visible in the funnel
 <div style="width: 50%;">
   
-![](./media/custom-funnel.png)
+![image](./media/custom-funnel.png)
   
 </div>
 
@@ -67,7 +67,7 @@ Note:  If the value of a given key is not numeric then by default '0' (In this c
 
 <div style="width: 60%;">
 
-![](./media/fsr-modules.png)
+![image](./media/fsr-modules.png)
 
 </div>
 "Across Modules" Dataset lets you select the module and it displays the count of records for the module based on the filters given
@@ -78,7 +78,7 @@ Note:  If the value of a given key is not numeric then by default '0' (In this c
 
 <div style="width: 50%">
   
-![](./media/funnel.png)
+![image](./media/funnel.png)
   
 </div>
 
