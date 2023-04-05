@@ -8,11 +8,10 @@
 **1. Dataset : Single Module**
 
 Select the "Single Module" option if all the records to be rendered are in a single record of a certain field of the module.
-<div style="width: 60%">
 
-![image](./media/custom-module.png)
+<!-- ![pic](./media/custom-module.png){width=50} -->
+<img src="./media/custom-module.png" width=50%>
 
-</div>
 
 1. Select the data source(module) to fetch the data from.
 2. Use the 'Filter', to filter out the record that contains the data.
