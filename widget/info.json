@@ -1,7 +1,7 @@
 {
 	"name": "funnelChart",
 	"title": "Funnel Chart",
-	"subTitle": "Funnel to display Module record count.",
+	"subTitle": "Visualizing the Progression of Data Through layers",
 	"version": "1.0.0",
 	"published_date": 1676873166,
 	"metadata": {

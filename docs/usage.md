@@ -5,9 +5,9 @@
 
 **Funnel Chart Widget Edit View**
 
-**1. Dataset : Single Module**
+**1. Dataset : Single Record**
 
-Select the "Single Module" option if all the records to be rendered are in a single record of a certain field of the module.
+Select the "Single Record" option if all the data to be rendered are in a single record of a certain field of the module.
 
 <img src="./media/custom-module.png" width=50%>
 
@@ -54,11 +54,11 @@ This is how the data will be visible in the funnel
 Note:  If the value of a given key is not numeric then by default '0' (In this case for incident) will be displayed and user will see an error "Invalid data" hover on .
 
 
-**2. Dataset : Across Modules**
+**2. Dataset : Multiple Modules**
 
-<img src="./media/fsr-modules.png" width=60%>
+<img src="./media/fsr-modules.png" width=50%>
 
-"Across Modules" Dataset lets you select the module and it displays the count of records for the module based on the filters given
+"Multiple Modules" Dataset lets you select the module and it displays the count of records for the module based on the filters given
 
 
 **Widget**
