@@ -15,7 +15,7 @@
         </div>
         <div
             data-ng-class="{ 'has-error': editFunnelWidgetForm.funnelModuleType.$invalid && editFunnelWidgetForm.funnelModuleType.$touched }">
-            <label for="funnelModuleType" class="control-label">Select Dataset</label><span class="text-danger">*
+            <label for="funnelModuleType" class="control-label">Select Data Source</label><span class="text-danger">*
                 <span
                     data-uib-tooltip="Select the 'Single Record' option if all the records to be rendered are in a single record of a certain field of the module.
                 'Multiple Modules' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
@@ -24,10 +24,6 @@
 
             <!-- Radio Button -->
 
-            <label for="info" class="control-label margin-top-sm"
-                data-ng-if="config.stopStateTitle.length > 0 && config.slaMappedOn.length > 0 && config.metItemvalue.length > 0 ">Select data source<span
-                    class="text-danger">*</span>
-                </label>
             <div class="row margin-bottom-sm">
                 <div class="col-md-6 padding-right-0">
                     <div class="radio">
