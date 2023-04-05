@@ -47,7 +47,7 @@ Select the "Single Record" option if all the data to be rendered are in a single
 
 This is how the data will be visible in the funnel
 
-<img src="./media/custom-funnel.png" width=50%>
+<img src="./media/custom-funnel.png" width=40%>
 
 
 
@@ -63,6 +63,6 @@ Note:  If the value of a given key is not numeric then by default '0' (In this c
 
 **Widget**
 
-<img src="./media/funnel.png" width=50%>
+<img src="./media/funnel.png" width=40%>
 
 **Note** : Maximum 4 layers can be added for any of the selected Datasets.
