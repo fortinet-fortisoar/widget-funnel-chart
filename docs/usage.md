@@ -15,7 +15,7 @@ Select the "Single Module" option if all the records to be rendered are in a sin
 1. Select the data source(module) to fetch the data from.
 2. Use the 'Filter', to filter out the record that contains the data.
 
-    <img src="./media/filter-for-single-module.png" width=60%>
+    <img src="./media/filter-for-single-module.png" width=50%>
 
 
 3. Select the field (the field must be of type json.)
@@ -46,11 +46,8 @@ Select the "Single Module" option if all the records to be rendered are in a sin
 **Widget**
 
 This is how the data will be visible in the funnel
-<div style="width: 50%;">
-  
-![image](./media/custom-funnel.png)
-  
-</div>
+
+<img src="./media/custom-funnel.png" width=50%>
 
 
 
