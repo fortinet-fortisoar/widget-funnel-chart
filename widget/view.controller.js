@@ -2,11 +2,11 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('funnelChart100Ctrl', funnelChart100Ctrl);
+    .controller('funnelChart101Ctrl', funnelChart101Ctrl);
 
-  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService'];
+  funnelChart101Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService'];
 
-  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService) {
+  function funnelChart101Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
