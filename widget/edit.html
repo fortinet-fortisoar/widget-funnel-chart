@@ -10,7 +10,7 @@
         <div class="form-group"
             data-ng-class="{ 'has-error': editFunnelWidgetForm.title.$invalid && editFunnelWidgetForm.title.$touched }">
             <label for="title" class="control-label">Title<span class="text-danger">*</span></label> <input id="title"
-                name="title" type="text" data-ng-model="config.title" class="form-control" />
+                name="title" type="text" data-ng-model="config.title" class="form-control" required/>
             <div data-cs-messages="editFunnelWidgetForm.title"></div>
         </div>
         <div
@@ -46,7 +46,7 @@
         </div>
         <!-- Show this block only when funnelModuleType value is 1-->
         <div data-ng-if="config.funnelModuleType == 'Single Module'">
-            <div class="form-group" data-ng-if="modules"
+            <div class="form-group" data-ng-if="customModuleList"
                 data-ng-class="{ 'has-error': editFunnelWidgetForm.customModule.$invalid && editFunnelWidgetForm.customModule.$touched }">
                 <label for="customModule" class="control-label">Data Source
                     <span class="text-danger">*</span>
@@ -54,7 +54,7 @@
                 <span data-uib-tooltip="Select the Module which has JSON data"
                     data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                 <select name="customModule" id="customModule" class="form-control"
-                    data-ng-options="module.type as module.name for module in modules"
+                    data-ng-options="module.type as module.name for module in customModuleList"
                     data-ng-model="config.customModule"
                     data-ng-change="loadAttributesForCustomModule(config.customModule)" required>
                     <option value="">Select an Option</option>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <label class="control-label">Select Field
+                    <label class="control-label" required>Select Field
                         <span class="text-danger">*</span>
                     </label>
                     <span data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
