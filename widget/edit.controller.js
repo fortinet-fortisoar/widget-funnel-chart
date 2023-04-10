@@ -38,12 +38,14 @@
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
     }
 
+    //filter out modules with flag true
     function checkTrueFlag(modulesArray) {
       return modulesArray.filter(function(obj) {
         return obj['flag'];
       });
     }
-    
+
+    //For custom module, to flag json field containing module as true
     function checkJsonFieldInModule(module) {
       var entity = new Entity(module.type);
       var defer = $q.defer();

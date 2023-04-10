@@ -75,16 +75,20 @@
                             data-form-name="'editFunnelWidgetForm'">
                         </div>
                     </div>
+                    <div id="customModuleField" 
+                    data-ng-class="{ 'has-error': editFunnelWidgetForm.customModuleField.$invalid && editFunnelWidgetForm.customModuleField.$touched }" >
+                        <label class="control-label" >Select Field
+                            <span class="text-danger">*</span>
+                        </label>
+                        <span data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
+                            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                        <select class="form-control"  name="customModuleField" id="customModuleField"
+                            data-ng-options="field.name as field.title for field in objectFields"
+                            data-ng-model="config.customModuleField" required>
+                            <option value="">Select an Option</option>
+                        </select>
+                    </div>
 
-                    <label class="control-label" required>Select Field
-                        <span class="text-danger">*</span>
-                    </label>
-                    <span data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
-                        data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
-                    <select class="form-control" data-ng-options="field.name as field.title for field in objectFields"
-                        data-ng-model="config.customModuleField" required>
-                        <option value="">Select an Option</option>
-                    </select>
                 </div>
                 <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="objectFields.length == 0">
                     <span>Select a module wich contains JSON field</span>
