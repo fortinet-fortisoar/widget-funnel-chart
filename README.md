@@ -10,6 +10,7 @@
 
 - **Applicable**: Dashboards
 
+- [Release Notes](./widget/release_notes.md)
 
 ## Overview
 
