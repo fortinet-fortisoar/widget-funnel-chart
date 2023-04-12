@@ -4,9 +4,9 @@
     .module('cybersponse')
     .controller('editFunnelChart101Ctrl', editFunnelChart101Ctrl);
 
-  editFunnelChart101Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity', '$q'];
+  editFunnelChart101Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity', '$q', 'modelMetadatasService'];
 
-  function editFunnelChart101Ctrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity, $q) {
+  function editFunnelChart101Ctrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity, $q, modelMetadatasService) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
@@ -25,44 +25,24 @@
     function init() {
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
-        var moduleCheckPromise = [];
-
+        // var moduleCheckPromise = [];
+        // modelMetadatasService.loadAllModules(false).then(function(result){
+        //   console.log(result);
+        // })
+        var moduleMetaData = modelMetadatasService.getMetadataByModuleType('alerts');
+        console.log(moduleMetaData);
         modules.forEach((module, index) =>{
-          var promise = checkJsonFieldInModule(module);
-          moduleCheckPromise.push(promise);
-        })
-        $q.all(moduleCheckPromise).then(function(result){
-          $scope.customModuleList = checkTrueFlag(result)
+          var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
+          for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
+            if(moduleMetaData.attributes[fieldIndex].type === "object"){
+              $scope.customModuleList.push(module);
+              break;
+            }
+          }
+          
         })
       })
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
-    }
-
-    //filter out modules with flag true
-    function checkTrueFlag(modulesArray) {
-      return modulesArray.filter(function(obj) {
-        return obj['flag'];
-      });
-    }
-
-    //For custom module, to flag json field containing module as true
-    function checkJsonFieldInModule(module) {
-      var entity = new Entity(module.type);
-      var defer = $q.defer();
-      return entity.loadFields().then(function () {
-        for (var key in entity.fields) {
-          //filtering out JSON fields 
-          if (entity.fields[key].type === "object") {
-            module.flag = true;
-            break;
-            }
-        }
-        if(!module.flag){
-          module.flag = false
-        }        
-        defer.resolve(module)
-        return defer.promise; 
-      })
     }
 
     init();
