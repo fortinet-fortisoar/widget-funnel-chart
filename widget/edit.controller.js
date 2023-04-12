@@ -25,10 +25,6 @@
     function init() {
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
-        // var moduleCheckPromise = [];
-        // modelMetadatasService.loadAllModules(false).then(function(result){
-        //   console.log(result);
-        // })
         var moduleMetaData = modelMetadatasService.getMetadataByModuleType('alerts');
         console.log(moduleMetaData);
         modules.forEach((module, index) =>{
