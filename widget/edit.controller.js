@@ -25,8 +25,7 @@
     function init() {
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
-        var moduleMetaData = modelMetadatasService.getMetadataByModuleType('alerts');
-        console.log(moduleMetaData);
+
         //Load Modules with json fiel, for Single Module type
         modules.forEach((module, index) =>{
           var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
