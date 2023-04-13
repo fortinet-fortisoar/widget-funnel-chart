@@ -27,15 +27,16 @@
         $scope.modules = modules;
         var moduleMetaData = modelMetadatasService.getMetadataByModuleType('alerts');
         console.log(moduleMetaData);
+        //Load Modules with json fiel, for Single Module type
         modules.forEach((module, index) =>{
           var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
           for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
+            //Check If JSON field is present in the module
             if(moduleMetaData.attributes[fieldIndex].type === "object"){
               $scope.customModuleList.push(module);
               break;
             }
           }
-          
         })
       })
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
