@@ -26,7 +26,7 @@
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
 
-        //Load Modules with json fiel, for Single Module type
+        //Create a list of modules with atleast one JSON field
         modules.forEach((module, index) =>{
           var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
           for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
