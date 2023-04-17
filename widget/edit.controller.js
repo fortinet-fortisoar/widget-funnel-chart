@@ -16,7 +16,7 @@
     $scope.removeLayer = removeLayer;
     $scope.onChangeModuleType = onChangeModuleType;
     $scope.maxlayers = false;
-    $scope.customModuleList=[];
+    $scope.JsonObjModuleList=[];
 
     $scope.funnelModuleType = {
       type: ['Across Modules', 'Single Module']
@@ -32,7 +32,7 @@
           for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
             //Check If JSON field is present in the module
             if(moduleMetaData.attributes[fieldIndex].type === "object"){
-              $scope.customModuleList.push(module);
+              $scope.JsonObjModuleList.push(module);
               break;
             }
           }
