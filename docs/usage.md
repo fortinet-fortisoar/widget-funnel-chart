@@ -5,7 +5,7 @@
 
 **Funnel Chart Widget Edit View**
 
-**1. Dataset : Single Record**
+**1. Data Source : Record containing JSON Data**
 
 Select the "Single Record" option if all the data to be rendered are in a single record of a certain field of the module.
 
@@ -54,7 +54,7 @@ This is how the data will be visible in the funnel
 Note:  If the value of a given key is not numeric then by default '0' (In this case for incident) will be displayed and user will see an error "Invalid data" hover on .
 
 
-**2. Dataset : Multiple Modules**
+**2. Data Source : Count of Records Across Module**
 
 <img src="./media/fsr-modules.png" width=50%>
 

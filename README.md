@@ -1,6 +1,6 @@
 ## Release Information
 
-- **Version**: 1.0.0
+- **Version**: 1.0.1
 
 - **Certified**: No
 
@@ -10,6 +10,7 @@
 
 - **Applicable**: Dashboards
 
+- [Release Notes](./widget/release_notes.md)
 
 ## Overview
 

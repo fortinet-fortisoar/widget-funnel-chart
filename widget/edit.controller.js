@@ -2,11 +2,11 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('editFunnelChart100Ctrl', editFunnelChart100Ctrl);
+    .controller('editFunnelChart101Ctrl', editFunnelChart101Ctrl);
 
-  editFunnelChart100Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity'];
+  editFunnelChart101Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity', '$q', 'modelMetadatasService'];
 
-  function editFunnelChart100Ctrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity) {
+  function editFunnelChart101Ctrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity, $q, modelMetadatasService) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
@@ -16,6 +16,7 @@
     $scope.removeLayer = removeLayer;
     $scope.onChangeModuleType = onChangeModuleType;
     $scope.maxlayers = false;
+    $scope.jsonObjModuleList=[];
 
     $scope.funnelModuleType = {
       type: ['Across Modules', 'Single Module']
@@ -24,6 +25,18 @@
     function init() {
       appModulesService.load(true).then(function (modules) {
         $scope.modules = modules;
+
+        //Create a list of modules with atleast one JSON field
+        modules.forEach((module, index) =>{
+          var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
+          for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
+            //Check If JSON field is present in the module
+            if(moduleMetaData.attributes[fieldIndex].type === "object"){
+              $scope.jsonObjModuleList.push(module);
+              break;
+            }
+          }
+        })
       })
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
     }
@@ -52,7 +65,6 @@
     if ($scope.config.customModule) {
       $scope.loadAttributesForCustomModule();
     }
-
 
     function loadAttributesForCustomModule() {
       $scope.fields = [];

@@ -2,18 +2,19 @@
 	"name": "funnelChart",
 	"title": "Funnel Chart",
 	"subTitle": "Visualizing the Progression of Data Through layers",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"published_date": 1676873166,
+	"releaseNotes": "available",
 	"metadata": {
 		"description": "To Visualize the Progression of Data Through Funnel layers",
-		"help_online":"https://github.com/fortinet-fortisoar/widget-funnel-chart/blob/release/1.0.0/README.md",
+		"help_online":"https://github.com/fortinet-fortisoar/widget-funnel-chart/blob/release/1.0.1/README.md",
 		"pages": [
 			"Dashboard"
 		],
 		"snapshots": [
-            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/edit-controller-custom-module.png",
-            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/edit-controller-fsr-module.png",
-			"https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.0/images/funnel-chart.png"
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.1/images/edit-controller-custom-module.png",
+            "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.1/images/edit-controller-fsr-module.png",
+			"https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.1/images/funnel-chart.png"
         ],
 		"certified": "No",
 		"publisher": "Fortinet",
