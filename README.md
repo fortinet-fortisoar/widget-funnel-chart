@@ -21,6 +21,6 @@ Using a funnel chart widget in SOC analysis can help analysts quickly identify t
 
 ## Next Steps
 
-| [Installation](./docs/setup.md#installation) | [Configuration](./docs/setup.md#configuration) | [Usage](./docs/usage.md) | [Contents](./docs/contents.md) |
+| [Installation](./docs/setup.md#installation) | [Configuration](./docs/setup.md#configuration) | [Usage](./docs/usage.md) | [Contents](./docs/content.md) |
 |----------------------------------------------|------------------------------------------------|--------------------------|--------------------------------|
 
