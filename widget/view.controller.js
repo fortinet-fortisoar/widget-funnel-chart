@@ -127,7 +127,7 @@
         var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
 
         if (isNaN(dataIsNumberCheck)) {
-          count.innerHTML = '0';
+          count.innerHTML = '?';
           count.setAttribute("title", "Invalid Data");
         }
         else {

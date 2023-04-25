@@ -65,7 +65,7 @@
                         <label class="control-label">Filter Record Which Contains The JSON Data
                             <span class="text-danger">*</span>
                         </label>
-                        <span data-uib-tooltip="It is recommended to apply filter, that filters out 1 record, i.e. by a unique field"
+                        <span data-uib-tooltip="It is recommended to apply filter, that filters out 1 record. If multiple records are filtered with the condition given, first record will be assumed"
                             data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                         <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
                             data-reset-field="$parent.fields" data-mode="'queryFilters'"
@@ -153,7 +153,7 @@
             </div>
             <div class="row margin-left-0 margin-top-lg margin-bottom-lg" style="padding-left: 5px;"
                 data-ng-hide="processing || disabled">
-                <button data-ng-click="addLayer()" type="button" class="btn btn-primary btn-xs">+
+                <button data-ng-click="addLayer()" type="button" class="btn btn-primary btn-xs" data-ng-if="config.layers.length < 4">+
                     &nbsp;Add Layer
                 </button>
             </div>
