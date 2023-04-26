@@ -5,5 +5,5 @@
 
 There are no contents available in this widget.
 
-| [Installation](./docs/setup.md#installation) | [Configuration](./docs/setup.md#configuration) | [Usage](./docs/usage.md) |
+| [Installation](./setup.md#installation) | [Configuration](./setup.md#configuration) | [Usage](./usage.md) |
 |----------------------------------------------|------------------------------------------------|--------------------------|
