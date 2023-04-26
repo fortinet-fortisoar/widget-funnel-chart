@@ -7,7 +7,7 @@
 
 **1. Data Source : Record containing JSON Data**
 
-Select the "Record containing JSON Data" option if all the data to be rendered sing JSON data of a certain field value of the module.
+Select the "Record containing JSON Data" option if all the data to be rendered using JSON data of a certain field value of the module.
 
 <img src="./media/custom-module.png" width=50%>
 
