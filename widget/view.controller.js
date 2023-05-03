@@ -38,12 +38,13 @@
           if (nestedKeysArray.length > 1) {
             var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
             nestedKeysArray.forEach(function (value) {
-              data = data[value];
+              data = CommonUtils.isUndefined(data) ? undefined : data[value];
             })
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
           else {
-            var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
+            var data = CommonUtils.isUndefined(pagedTotalData.fieldRows[0][$scope.config.customModuleField].value) ? undefined : 
+                        pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
         });
