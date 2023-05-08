@@ -7,11 +7,7 @@ The funnel chart widget provides a graphical representation of the number of ale
 
 In addition to incident response, the funnel chart widget can be used in various other domains such as sales and marketing to track the progress of leads through the sales funnel, and other contexts, such as website analytics or customer service. The stages in a funnel chart widget can be customized to reflect the specific process being analyzed.
 
-<<<<<<< HEAD
 Select the "Record containing JSON Data" option if all the data to be rendered using JSON data of a certain field value of the module.
-=======
-## Funnel Chart Widget Edit View
->>>>>>> feb2808 (Image changes)
 
 This section details the process to edit the widget and use it with data from a specific record or from across multiple modules.
 
