@@ -1,5 +1,5 @@
 | [Home](../README.md) |
-|--------------------------------------------|
+|---------------------------------------------|
 
 # Usage
 
@@ -7,7 +7,7 @@
 
 **1. Data Source : Record containing JSON Data**
 
-Select the "Single Record" option if all the data to be rendered are in a single record of a certain field of the module.
+Select the "Record containing JSON Data" option if all the data to be rendered using JSON data of a certain field value of the module.
 
 <img src="./media/custom-module.png" width=50%>
 
@@ -32,13 +32,13 @@ Select the "Single Record" option if all the data to be rendered are in a single
     }
     ```
 4. In the value section of the layer, mention the key for which the value is the data to be rendered. 
-    eg. for the above json data, to reder actual and Sale's data populate the 'value' field as following
+    eg. for the above json data, to render Actual and Sale's data populate the 'value' field as following
 
     <img src="./media/custom-module-layer.png" width=50%>
 
 
 
-**Example of a custom module**
+**Example of a Field and JSON Value**
 
 ![image](./media/custom-module-example.png)
 
@@ -51,17 +51,14 @@ This is how the data will be visible in the funnel
 
 
 
-Note:  If the value of a given key is not numeric then by default '0' (In this case for incident) will be displayed and user will see an error "Invalid data" hover on .
+Note:  If the value of a given key is not numeric then by default '?' will be displayed and user will see an error "Invalid data" hover on.
 
 
 **2. Data Source : Count of Records Across Module**
 
 <img src="./media/fsr-modules.png" width=50%>
 
-"Multiple Modules" Dataset lets you select the module and it displays the count of records for the module based on the filters given
-
-
-**Widget**
+"Count of Records Across Module" option lets you select the multiple modules and it displays the count of records for each module based on the applied filters.
 
 <img src="./media/funnel.png" width=40%>
 
