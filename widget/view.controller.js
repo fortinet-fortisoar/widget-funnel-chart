@@ -38,7 +38,12 @@
           if (nestedKeysArray.length > 1) {
             var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
             nestedKeysArray.forEach(function (value) {
+<<<<<<< HEAD
               data = CommonUtils.isUndefined(data) ? undefined : data[value];
+=======
+              
+              data = data[value];
+>>>>>>> feb2808 (Image changes)
             })
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
