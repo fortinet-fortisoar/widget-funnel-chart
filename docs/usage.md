@@ -27,11 +27,11 @@ This option helps retrieve and display data from a record that has values in `JS
 
     ![](./res/select-single-record.png)
 
-5. Select a module whose records contain `JSON` data. A message informs if the selected module does not contain data in `JSON` format.
-
-    ![](./res/select-module.png)
+5. Select a module whose records contain `JSON` data. 
 
 6. Define filters under the field **Filter Record Which Contains The JSON Data**. The filter conditions should be such that they select only the record that contains the relevant data.
+
+    ![](./res/single-record-filters.png)
 
 7. Select the field (the field must be of type `JSON`).
 
