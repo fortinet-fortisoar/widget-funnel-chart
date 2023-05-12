@@ -33,7 +33,6 @@ This option helps retrieve and display data from a record that has values in `JS
 
     ![](./res/single-record-filters.png)
 
-
 7. Select the field (the field must be of type `JSON`).
 
     *Below is an example of the field's value*:
