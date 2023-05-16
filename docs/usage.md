@@ -1,5 +1,5 @@
 | [Home](../README.md) |
-|--------------------------------------------|
+|----------------------|
 
 # Usage
 
@@ -74,10 +74,10 @@ The following image shows how the data appears in the funnel chart after adding 
 
 ![](./res/single-rec-funnel.png)
 
-> **NOTE**:  If the value of a given key is not numeric, by default `0` is displayed and On hover, the error **Invalid data** appears.
+> **NOTE**:  If the value of a given key is not numeric, by default `0` is displayed and on hover, the error **Invalid data** appears.
 
 
-### Count of Records Across Module
+### Count of Records Across Modules
 
 This option helps retrieve and display data from records across multiple modules. Select the **Count of Records Across Module** option to show data across modules. The widget has filters to select only that record that meets the filter conditions.
 
@@ -113,4 +113,4 @@ The following image shows how the data appears in the funnel chart after adding 
 ![](./res/multiple-modules-funnel.png)
 
 | [Installation](./setup.md#installation) | [Configuration](./setup.md#configuration) |
-|----------------------------------------------|------------------------------------------------|
+|-----------------------------------------|-------------------------------------------|
