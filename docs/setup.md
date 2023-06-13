@@ -1,7 +1,8 @@
 | [Home](../README.md) |
-|--------------------------------------------|
+|----------------------|
 
 # Installation
+
 1. To install a widget, click **Content Hub** > **Discover**.
 2. From the list of widget that appears, search for and select **Funnel Chart**.
 3. Click the card of the **Funnel Chart** widget.
@@ -11,21 +12,32 @@
 
 ## Funnel Chart Widget Settings
 
-| Fields                                   | Description                              |
-| ---------------------------------------- | ---------------------------------------- |
-| Title                                    | Specify the heading or title of the visual depiction of each record node in the group. |
-| Dataset                              | Populate the records with FSR modules or a custom single module|
+### Data Source Selection
 
-| Single Module                            | Description                              |
-| ---------------------------------------- | ---------------------------------------- |
-| Data Source                              | Select the Custom Module to fetch the data from |
-| Filter Record                            | Assuming the entire data is in a single record add condition such that a single record of the selected module is filtered. If multiple redords are filtered witht the condition given, first record will be assumed|
-| Select Field for Data Source             | Select the field(Column) of the module which contains the data|
-| Add Layer                                | To add a layer to the funnel, one layer is mandatory, can append or delete a layer|
-| Title                                    | Enter the title For the perticular layer to display on the widget|
-| Value                                    | Considering the data is json, add the key, the value will be displayed on the perticular layer|
+| Fields             | Description                                                                            |
+|--------------------|----------------------------------------------------------------------------------------|
+| Title              | Specify the heading or title of the visual depiction of each record node in the group. |
+| Select Data Source | Populate the records with FortiSOAR&trade; modules or data from a single custom module |
 
-| Single Module                            | Description                              |
-| ---------------------------------------- | ---------------------------------------- |
-| Title                                    | Enter the title For the perticular layer to display on the widget |
-| Data Source                              | Select the module to display the record count|  
+### Record Containing JSON Data
+
+| Fields                                     | Description                                                                                                                                                                     |
+|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Data Source                                | Select the custom module from which to fetch the data                                                                                                                           |
+| Filter Record Which Contains The JSON Data | Add conditions to retrieve only the record meeting the filter conditions. If multiple records match the conditions given, the first record is considered.                       |
+| Select Field                               | Select the field(Column) of the module which contains the `JSON` data                                                                                                           |
+| Title                                      | Enter the title of the layer to display on the widget                                                                                                                           |
+| Value                                      | Considering the data is `JSON`, enter a `key` to display its corresponding `value` on a layer                                                                                   |
+| Add Layer                                  | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
+
+### Count of Records Across Modules
+
+| Fields          | Description                                                                                                                                                                     |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Title           | Enter the title for the layer to display on the widget                                                                                                                          |
+| Data Source     | Select the module to display its record count                                                                                                                                   |
+| Filter Criteria | Add conditions to retrieve the count of records meeting the filter conditions.                                                                                                  |
+| Add Layer       | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
+
+| [Usage](./usage.md) |
+|---------------------|

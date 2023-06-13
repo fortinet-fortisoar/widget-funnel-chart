@@ -2,18 +2,18 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('funnelChart100Ctrl', funnelChart100Ctrl);
+    .controller('funnelChart101Ctrl', funnelChart101Ctrl);
 
-  funnelChart100Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService'];
+  funnelChart101Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService', 'CommonUtils'];
 
-  function funnelChart100Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService) {
+  function funnelChart101Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService, CommonUtils) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
       layer3: '#36CDD7',
       layer4: '#3ACAD3'
     }
-
+    $scope.filterValidation = false;
 
     __init()
 
@@ -32,18 +32,23 @@
       };
       var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
       pagedTotalData.loadByPost(filters).then(function () {
+        if (pagedTotalData.fieldRows.length === 0) {
+          $scope.filterValidation = true;
+          return;
+        }
         $scope.config.moduleList = [];
         $scope.config.layers.forEach((layer, index) => {
           var nestedKeysArray = layer.value.split('.');
           if (nestedKeysArray.length > 1) {
             var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
             nestedKeysArray.forEach(function (value) {
-              data = data[value];
+              data = CommonUtils.isUndefined(data) ? undefined : data[value];
             })
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
           else {
-            var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
+            var data = CommonUtils.isUndefined(pagedTotalData.fieldRows[0][$scope.config.customModuleField].value) ? undefined :
+              pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
         });
@@ -90,6 +95,7 @@
     }
 
     function createFunnel() {
+
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
       var parentDiv = document.getElementById("funnelChartParentDiv" + $scope.config.wid)
@@ -122,12 +128,12 @@
 
         //setting count to the perticular layer
         var count = document.createElement('div');
-        count.setAttribute('id', $scope.config.wid+'layer-'+(i+1)+"-count")//set unique id to the element
+        count.setAttribute('id', $scope.config.wid + 'layer-' + (i + 1) + "-count")//set unique id to the element
         count.setAttribute('style', 'font-weight:bold;')
         var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
 
         if (isNaN(dataIsNumberCheck)) {
-          count.innerHTML = '0';
+          count.innerHTML = '?';
           count.setAttribute("title", "Invalid Data");
         }
         else {
@@ -145,6 +151,7 @@
         margin = margin + 15;
         width = width - 30;
       }
+
     }
   }
 })();
