@@ -2,30 +2,73 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('funnelChart101Ctrl', funnelChart101Ctrl);
+    .controller('funnelChart102Ctrl', funnelChart102Ctrl);
 
-  funnelChart101Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService', 'CommonUtils'];
+  funnelChart102Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService', 'CommonUtils'];
+  const widgetBroadcastEventFlag = 'EnableGlobalVisiblityBroadcast';
 
-  function funnelChart101Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService, CommonUtils) {
+  function funnelChart102Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService, CommonUtils) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
       layer3: '#36CDD7',
       layer4: '#3ACAD3'
     }
+
     $scope.filterValidation = false;
 
     __init()
 
     function __init() {
+      dynamicVariableService.loadDynamicVariables().then(function (dynamicVariables){      
+        $scope.globalVariables = getObjectById(dynamicVariables, widgetBroadcastEventFlag);
+        eventListner();
+      });
+
       if ($scope.config.funnelModuleType == 'Across Modules') { populateData(); }
       else {
         populateCustomData();
       }
     }
 
+    function getObjectById(data, name) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].name === name) {
+          if (data[i].value === "true")
+          {
+            return true;
+          }
+          else
+          {
+            return false;
+          }
+        }
+      }
+      return false; // return false if no object with the given id is found
+    }
+
+    function eventListner(){
+      if($scope.globalVariables){
+        $rootScope.$on('GlobalVisiblityEvent', function (event, data) {
+          if($scope.config.funnelModuleType == 'Single Module'){
+            $scope.config.query.filters = [];
+            $scope.config.query.filters.push(
+              {
+                field: "id",
+                operator: "eq",
+                type: "primitive",
+                value: data,
+                _operator: "eq"
+              }
+            )
+            populateCustomData(true);
+          }
+        })
+      }
+    }
+
     //to populate funnel for custom module
-    function populateCustomData() {
+    function populateCustomData(changeData) {
 
       var filters = {
         query: $scope.config.query
@@ -42,25 +85,48 @@
           if (nestedKeysArray.length > 1) {
             var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
             nestedKeysArray.forEach(function (value) {
-              data = CommonUtils.isUndefined(data) ? undefined : data[value];
+              data = CommonUtils.isUndefined(data) ? undefined : data[value];            
             })
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
           else {
             var data = CommonUtils.isUndefined(pagedTotalData.fieldRows[0][$scope.config.customModuleField].value) ? undefined :
-              pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
+            pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
             $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
           }
         });
-        createFunnel();
+        if (changeData) {
+          changeDataOnBroadcast();
+        }
+        else {
+          createFunnel();
+        }
       })
+    }
+
+    function changeDataOnBroadcast(){
+      for (let i = 0; i < $scope.config.layers.length; i++){
+
+        var countDiv = document.getElementById($scope.config.wid+'layer-'+(i+1)+"-count");
+        var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
+
+        if (isNaN(dataIsNumberCheck)) {
+          countDiv.innerHTML = '?';
+          countDiv.setAttribute("title", "Invalid Data");
+          // countDiv.setAttribute("style", "color: red");
+        }
+        else {
+          countDiv.innerHTML = $scope.config.moduleList[i].data;
+        }
+
+      }
+
     }
 
     //populate data for fsr modules
     function populateData() {
       var promises = [];
       $scope.config.layers.forEach((layer, index) => {
-        //qurey to get count
         var countAggregate = {
           alias: layer.value,
           field: '*',
@@ -95,7 +161,6 @@
     }
 
     function createFunnel() {
-
       var margin = 0;
       var width = 15 + (30 * ($scope.config.layers.length + 3));
       var parentDiv = document.getElementById("funnelChartParentDiv" + $scope.config.wid)
@@ -108,7 +173,7 @@
         var centerTaper = document.createElement('div');
         var rightTaper = document.createElement('div');
 
-        //set class
+                //set class
         funnel.setAttribute('class', 'position-relative funnelTop-' + ($scope.config.layers.length - i - 1));
         leftTaper.setAttribute('class', 'taper-left');
         centerTaper.setAttribute('class', 'taper-center cont');
@@ -120,13 +185,13 @@
         centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer' + (i + 1)] + '; width :' + width + 'px;');
         funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
-        //Change inner text 
+                //Change inner text 
         var innerTxt = document.createElement('div');
         innerTxt.innerHTML = $scope.config.moduleList[i].title;
         innerTxt.setAttribute('class', "inner-text")
         innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
 
-        //setting count to the perticular layer
+                //setting count to the perticular layer
         var count = document.createElement('div');
         count.setAttribute('id', $scope.config.wid + 'layer-' + (i + 1) + "-count")//set unique id to the element
         count.setAttribute('style', 'font-weight:bold;')
@@ -135,6 +200,7 @@
         if (isNaN(dataIsNumberCheck)) {
           count.innerHTML = '?';
           count.setAttribute("title", "Invalid Data");
+          // count.setAttribute("style", "color: red");
         }
         else {
           count.innerHTML = $scope.config.moduleList[i].data;
@@ -151,7 +217,6 @@
         margin = margin + 15;
         width = width - 30;
       }
-
     }
   }
 })();
