@@ -14,9 +14,12 @@
     $scope.loadAttributes = loadAttributes;
     $scope.addLayer = addLayer;
     $scope.removeLayer = removeLayer;
-    $scope.onChangeModuleType = onChangeModuleType;
+    $scope.onChangedataSourceType = onChangedataSourceType;
     $scope.maxlayers = false;
     $scope.jsonObjModuleList=[];
+    $scope.layers = $scope.layers ? $scope.layers : [];
+    $scope.config.eventName = $scope.config.eventName ? $scope.config.eventName : "";
+    $scope.config.broadcastEvent = $scope.config.broadcastEvent ? $scope.config.broadcastEvent : false;
 
     $scope.funnelModuleType = {
       type: ['Across Modules', 'Single Module']
@@ -39,16 +42,22 @@
         })
       })
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
+      if($scope.config.funnelModuleType === 'Across Modules' && $scope.config.layers[0].value){
+        $scope.config.layers.forEach(function(item, index){
+          loadAttributes(index);
+        })
+      }
     }
 
     init();
 
-    function onChangeModuleType() {
+    function onChangedataSourceType() {
       delete $scope.config.query;
       delete $scope.config.customModuleField;
       delete $scope.config.customModule;
       $scope.maxlayers = false;
       $scope.config.layers = [];
+      $scope.layers = [];
       $scope.config.layers.push({ value: undefined, title: '' });
     }
 
@@ -85,8 +94,9 @@
     }
 
     function loadAttributes(index) {
-      $scope.config.layers[index].fields = [];
-      $scope.config.layers[index].fieldsArray = [];
+      $scope.layers[index] = {};
+      $scope.layers[index].fields = [];
+      $scope.layers[index].fieldsArray = [];
       $scope.pickListFields = [];
       var entity = new Entity($scope.config.layers[index].value);
       entity.loadFields().then(function () {
@@ -95,9 +105,9 @@
             $scope.pickListFields.push(entity.fields[key]);
           }
         }
-        $scope.config.layers[index].fields = entity.getFormFields();
-        angular.extend($scope.config.layers[index].fields, entity.getRelationshipFields());
-        $scope.config.layers[index].fieldsArray = entity.getFormFieldsArray();
+        $scope.layers[index].fields = entity.getFormFields();
+        angular.extend($scope.layers[index].fields, entity.getRelationshipFields());
+        $scope.layers[index].fieldsArray = entity.getFormFieldsArray();
       });
     }
 

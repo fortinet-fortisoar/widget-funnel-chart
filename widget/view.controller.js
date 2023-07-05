@@ -4,129 +4,118 @@
     .module('cybersponse')
     .controller('funnelChart102Ctrl', funnelChart102Ctrl);
 
-  funnelChart102Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'dynamicVariableService', 'CommonUtils'];
-  const widgetBroadcastEventFlag = 'EnableGlobalVisiblityBroadcast';
+  funnelChart102Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'CommonUtils'];
 
-  function funnelChart102Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, dynamicVariableService, CommonUtils) {
+  function funnelChart102Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, CommonUtils) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
       layer3: '#36CDD7',
       layer4: '#3ACAD3'
     }
+    var _config = $scope.config;
 
     $scope.filterValidation = false;
 
     __init()
 
     function __init() {
-      dynamicVariableService.loadDynamicVariables().then(function (dynamicVariables){      
-        $scope.globalVariables = getObjectById(dynamicVariables, widgetBroadcastEventFlag);
-        eventListner();
-      });
 
-      if ($scope.config.funnelModuleType == 'Across Modules') { populateData(); }
+      if (_config.funnelModuleType == 'Across Modules') { 
+        populateData(); 
+      }
       else {
         populateCustomData();
       }
     }
 
-    function getObjectById(data, name) {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].name === name) {
-          if (data[i].value === "true")
-          {
-            return true;
-          }
-          else
-          {
-            return false;
-          }
+    //if this event is supposed to listen to eny of the broadcasted events
+    if (_config.broadcastEvent) {
+      $rootScope.$on(_config.eventName, function (event, data) {
+        var element = document.getElementById("funnelChartParentDiv" + _config.wid);
+        element.style.visibility = 'hidden';
+        element.style.opacity = 0;
+        element.style.transition = 'visibility 0.3s linear,opacity 0.3s linear';
+        if (_config.funnelModuleType == 'Single Module') {
+          var defer = $q.defer();
+          $resource(data).get(function (response) {
+            defer.resolve(response);
+          }, function (error) {
+            defer.reject(error);
+          })
+          defer.promise.then(function (response) {
+            formatDataForWidget(true, response[_config.customModuleField])
+            setTimeout(function () {
+              element.style.visibility = 'visible';
+              element.style.opacity = 1;
+            }, 600);
+          })
         }
-      }
-      return false; // return false if no object with the given id is found
+      })
     }
 
-    function eventListner(){
-      if($scope.globalVariables){
-        $rootScope.$on('GlobalVisiblityEvent', function (event, data) {
-          if($scope.config.funnelModuleType == 'Single Module'){
-            $scope.config.query.filters = [];
-            $scope.config.query.filters.push(
-              {
-                field: "id",
-                operator: "eq",
-                type: "primitive",
-                value: data,
-                _operator: "eq"
-              }
-            )
-            populateCustomData(true);
-          }
-        })
-      }
-    }
 
     //to populate funnel for custom module
-    function populateCustomData(changeData) {
-
+    function populateCustomData() {
       var filters = {
-        query: $scope.config.query
+        query: _config.query
       };
-      var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
+      var pagedTotalData = new PagedCollection(_config.customModule, null, null);
       pagedTotalData.loadByPost(filters).then(function () {
         if (pagedTotalData.fieldRows.length === 0) {
           $scope.filterValidation = true;
           return;
         }
-        $scope.config.moduleList = [];
-        $scope.config.layers.forEach((layer, index) => {
-          var nestedKeysArray = layer.value.split('.');
-          if (nestedKeysArray.length > 1) {
-            var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
-            nestedKeysArray.forEach(function (value) {
-              data = CommonUtils.isUndefined(data) ? undefined : data[value];            
-            })
-            $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
-          }
-          else {
-            var data = CommonUtils.isUndefined(pagedTotalData.fieldRows[0][$scope.config.customModuleField].value) ? undefined :
-            pagedTotalData.fieldRows[0][$scope.config.customModuleField].value[layer.value];
-            $scope.config.moduleList.push({ 'title': layer.title, 'data': data })
-          }
-        });
-        if (changeData) {
-          changeDataOnBroadcast();
-        }
-        else {
-          createFunnel();
-        }
+        $scope.moduleList = [];
+        var funnelChartData = pagedTotalData.fieldRows[0][_config.customModuleField].value;
+        formatDataForWidget(false, funnelChartData);
       })
     }
 
-    function changeDataOnBroadcast(){
-      for (let i = 0; i < $scope.config.layers.length; i++){
+    function formatDataForWidget(eventGenerated, funnelChartData) {
+      //moduleList is the data in the format required by widget, which will be polulated in this function
+      $scope.moduleList = [];
+      _config.layers.forEach((layer, index) => {
+        var nestedKeysArray = layer.value.split('.');
+        if (nestedKeysArray.length > 1) {
+          var data = funnelChartData;
+          nestedKeysArray.forEach(function (value) {
+            data = CommonUtils.isUndefined(data) ? undefined : data[value];
+          })
+          $scope.moduleList.push({ 'title': layer.title, 'data': data })
+        }
+        else {
+          var data = CommonUtils.isUndefined(funnelChartData) ? undefined : funnelChartData[layer.value]
+          $scope.moduleList.push({ 'title': layer.title, 'data': data })
+        }
+      });
+      if (eventGenerated) {
+        changeDataOnBroadcast()
+      }
+      else {
+        createFunnel()
+      }
+    }
 
-        var countDiv = document.getElementById($scope.config.wid+'layer-'+(i+1)+"-count");
-        var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
-
+    function changeDataOnBroadcast() {
+      //instead of reloading the entire widget this function just changes the inner html 
+      for (let i = 0; i < _config.layers.length; i++) {
+        var countDiv = document.getElementById(_config.wid + 'layer-' + (i + 1) + "-count");
+        var dataIsNumberCheck = Number($scope.moduleList[i].data);
         if (isNaN(dataIsNumberCheck)) {
           countDiv.innerHTML = '?';
           countDiv.setAttribute("title", "Invalid Data");
-          // countDiv.setAttribute("style", "color: red");
         }
         else {
-          countDiv.innerHTML = $scope.config.moduleList[i].data;
+          countDiv.innerHTML = $scope.moduleList[i].data;
         }
-
       }
-
     }
 
     //populate data for fsr modules
     function populateData() {
       var promises = [];
-      $scope.config.layers.forEach((layer, index) => {
+      _config.layers.forEach((layer, index) => {
         var countAggregate = {
           alias: layer.value,
           field: '*',
@@ -139,10 +128,10 @@
         promises.push(promise);
       });
       $q.all(promises).then(function (result) {
-        $scope.config.moduleList = [];
-        $scope.config.layers.forEach((layer, index) => {
+        $scope.moduleList = [];
+        _config.layers.forEach((layer, index) => {
           if (result[index] && result[index]['hydra:member'] && result[index]['hydra:member'].length > 0) {
-            $scope.config.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:member'][0][layer.value] })
+            $scope.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:member'][0][layer.value] })
           }
         })
         createFunnel();
@@ -162,10 +151,10 @@
 
     function createFunnel() {
       var margin = 0;
-      var width = 15 + (30 * ($scope.config.layers.length + 3));
-      var parentDiv = document.getElementById("funnelChartParentDiv" + $scope.config.wid)
-      parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:10px;")
-      for (let i = 0; i < $scope.config.layers.length; i++) {
+      var width = 15 + (30 * (_config.layers.length + 3));
+      var parentDiv = document.getElementById("funnelChartParentDiv" + _config.wid)
+      parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:8px;")
+      for (let i = 0; i < _config.layers.length; i++) {
 
         //create divs for left taper,  right taper and center
         var funnel = document.createElement('div');
@@ -173,8 +162,8 @@
         var centerTaper = document.createElement('div');
         var rightTaper = document.createElement('div');
 
-                //set class
-        funnel.setAttribute('class', 'position-relative funnelTop-' + ($scope.config.layers.length - i - 1));
+        //set class
+        funnel.setAttribute('class', 'position-relative funnelTop-' + (_config.layers.length - i - 1));
         leftTaper.setAttribute('class', 'taper-left');
         centerTaper.setAttribute('class', 'taper-center cont');
         rightTaper.setAttribute('class', 'taper-right');
@@ -183,19 +172,19 @@
         leftTaper.setAttribute('style', 'border-color:' + $scope.color['layer' + (i + 1)] + ' transparent');
         rightTaper.setAttribute('style', 'border-color:' + $scope.color['layer' + (i + 1)] + ' transparent');
         centerTaper.setAttribute('style', 'background-color:' + $scope.color['layer' + (i + 1)] + '; width :' + width + 'px;');
-        funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + ($scope.config.layers.length - i) + "; display:flex; margin-bottom:10px");
+        funnel.setAttribute("style", "margin-left:" + margin + 'px; z-index:' + (_config.layers.length - i) + "; display:flex; margin-bottom:10px");
 
-                //Change inner text 
+        //Change inner text 
         var innerTxt = document.createElement('div');
-        innerTxt.innerHTML = $scope.config.moduleList[i].title;
+        innerTxt.innerHTML = $scope.moduleList[i].title;
         innerTxt.setAttribute('class', "inner-text")
-        innerTxt.setAttribute('title', $scope.config.moduleList[i].title)
+        innerTxt.setAttribute('title', $scope.moduleList[i].title)
 
-                //setting count to the perticular layer
+        //setting count to the perticular layer
         var count = document.createElement('div');
-        count.setAttribute('id', $scope.config.wid + 'layer-' + (i + 1) + "-count")//set unique id to the element
+        count.setAttribute('id', _config.wid + 'layer-' + (i + 1) + "-count")//set unique id to the element
         count.setAttribute('style', 'font-weight:bold;')
-        var dataIsNumberCheck = Number($scope.config.moduleList[i].data);
+        var dataIsNumberCheck = Number($scope.moduleList[i].data);
 
         if (isNaN(dataIsNumberCheck)) {
           count.innerHTML = '?';
@@ -203,7 +192,7 @@
           // count.setAttribute("style", "color: red");
         }
         else {
-          count.innerHTML = $scope.config.moduleList[i].data;
+          count.innerHTML = $scope.moduleList[i].data;
         }
 
         //append the child to parent div

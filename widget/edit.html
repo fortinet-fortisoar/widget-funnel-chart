@@ -29,13 +29,13 @@
                 <div class="col-md-6 padding-right-0">
                     <div class="radio">
                         <label><input id="JsonField" name="JsonField" type="radio"
-                                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" value="Single Module">&nbsp;&nbsp;Record Containing JSON Data</label>
+                                data-ng-model="config.funnelModuleType" data-ng-change="onChangedataSourceType()" value="Single Module">&nbsp;&nbsp;Record Containing JSON Data</label>
                                 <span data-uib-tooltip="It allows you to select single record that contains a JSON object."
                                     data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                     </div>
                     <div class="radio">
                         <label><input id="accrossModules" name="accrossModules" type="radio"
-                                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" value="Across Modules">&nbsp;&nbsp;Count of Records Across Module</label>
+                                data-ng-model="config.funnelModuleType" data-ng-change="onChangedataSourceType()" value="Across Modules">&nbsp;&nbsp;Count of Records Across Module</label>
                                 <span data-uib-tooltip="It allows you to get the count of records of the selected modules"
                                 data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                     </div>
@@ -134,10 +134,10 @@
                                     <option value="">Select an Option</option>
                                 </select>
                             </div>
-                            <div class="margin-top-md margin-bottom-md" data-ng-if="item.fields !== undefined">
+                            <div class="margin-top-md margin-bottom-md" data-ng-if="layers[$index].fields !== undefined">
                                 <label class="control-label">Filter Criteria </label>
-                                <div data-cs-conditional data-ng-if="item.fieldsArray.length > 0"
-                                    data-fields="item.fields" data-reset-field="item.fields" data-mode="'queryFilters'"
+                                <div data-cs-conditional data-ng-if="layers[$index].fieldsArray.length > 0"
+                                    data-fields="layers[$index].fields" data-reset-field="layers[$index].fields" data-mode="'queryFilters'"
                                     data-ng-model="item.query" data-parent-form="editFunnelWidgetForm"
                                     data-enable-expression="(page==='dashboard' || page==='reporting')"
                                     data-show-uuid="true" data-form-name="'editFunnelWidgetForm'">
@@ -159,6 +159,25 @@
             </div>
             <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="maxlayers === true">
                 <span>Maximum 4 layers can be added.</span>
+            </div>
+            <div  data-ng-if="config.funnelModuleType == 'Single Module'">
+                <span class="checkbox display-inline line-height-15">
+                    <label for="broadcastEvent">
+                        <input id="broadcastEvent" type="checkbox" name="broadcastEvent"
+                            data-ng-model="config.broadcastEvent">&nbsp;Broadcast Event
+                    </label>
+                    <span data-uib-tooltip="Enter name of event to listen to, this widget will listen to the event if boadcasted" data-tooltip-append-to-body="true"><i
+                        class="icon icon-information font-Size-13"></i></span>
+                </span>
+                <div data-ng-if="config.broadcastEvent">
+                    <div class="form-group"
+                        data-ng-class="{ 'has-error': editFunnelWidgetForm.eventName.$invalid && editFunnelWidgetForm.eventName.$touched }">
+                        <label for="eventName" class="control-label">Event Name<span
+                                class="text-danger">*</span></label> <input id="eventName" name="eventName" type="text"
+                            data-ng-model="config.eventName" class="form-control" />
+                        <div data-cs-messages="editFunnelWidgetForm.eventName"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
