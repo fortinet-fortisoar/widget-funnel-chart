@@ -4,9 +4,9 @@
     .module('cybersponse')
     .controller('editFunnelChart102Ctrl', editFunnelChart102Ctrl);
 
-  editFunnelChart102Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity', '$q', 'modelMetadatasService'];
+  editFunnelChart102Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'Entity', 'modelMetadatasService'];
 
-  function editFunnelChart102Ctrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity, $q, modelMetadatasService) {
+  function editFunnelChart102Ctrl($scope, $uibModalInstance, config, appModulesService, _, Entity, modelMetadatasService) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
@@ -20,8 +20,9 @@
     $scope.layers = $scope.layers ? $scope.layers : [];
     $scope.config.eventName = $scope.config.eventName ? $scope.config.eventName : "";
     $scope.config.broadcastEvent = $scope.config.broadcastEvent ? $scope.config.broadcastEvent : false;
+    $scope.toggleArrow = toggleArrow;
 
-    $scope.funnelModuleType = {
+    $scope.moduleType = {
       type: ['Across Modules', 'Single Module']
     }
 
@@ -42,7 +43,7 @@
         })
       })
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
-      if($scope.config.funnelModuleType === 'Across Modules' && $scope.config.layers[0].value){
+      if($scope.config.moduleType === 'Across Modules' && $scope.config.layers[0].value){
         $scope.config.layers.forEach(function(item, index){
           loadAttributes(index);
         })
@@ -50,6 +51,10 @@
     }
 
     init();
+    
+    function toggleArrow(){
+      $scope.toggle = $scope.toggle === undefined ? true : !$scope.toggle;
+    }
 
     function onChangedataSourceType() {
       delete $scope.config.query;
@@ -97,14 +102,8 @@
       $scope.layers[index] = {};
       $scope.layers[index].fields = [];
       $scope.layers[index].fieldsArray = [];
-      $scope.pickListFields = [];
       var entity = new Entity($scope.config.layers[index].value);
       entity.loadFields().then(function () {
-        for (var key in entity.fields) {
-          if (entity.fields[key].type === "picklist") {
-            $scope.pickListFields.push(entity.fields[key]);
-          }
-        }
         $scope.layers[index].fields = entity.getFormFields();
         angular.extend($scope.layers[index].fields, entity.getRelationshipFields());
         $scope.layers[index].fieldsArray = entity.getFormFieldsArray();

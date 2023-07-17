@@ -14,14 +14,12 @@
       layer4: '#3ACAD3'
     }
     var _config = $scope.config;
-
     $scope.filterValidation = false;
-
+    
     __init()
 
     function __init() {
-
-      if (_config.funnelModuleType == 'Across Modules') { 
+      if (_config.moduleType == 'Across Modules') { 
         populateData(); 
       }
       else {
@@ -31,12 +29,13 @@
 
     //if this event is supposed to listen to eny of the broadcasted events
     if (_config.broadcastEvent) {
-      $rootScope.$on(_config.eventName, function (event, data) {
+      //example widget:globalVisibilityEvent from Record Summary card
+      $rootScope.$on("widget:"+_config.eventName, function (event, data) {
         var element = document.getElementById("funnelChartParentDiv" + _config.wid);
         element.style.visibility = 'hidden';
         element.style.opacity = 0;
         element.style.transition = 'visibility 0.3s linear,opacity 0.3s linear';
-        if (_config.funnelModuleType == 'Single Module') {
+        if (_config.moduleType == 'Single Module') {
           var defer = $q.defer();
           $resource(data).get(function (response) {
             defer.resolve(response);
@@ -53,7 +52,6 @@
         }
       })
     }
-
 
     //to populate funnel for custom module
     function populateCustomData() {
@@ -112,16 +110,11 @@
       }
     }
 
+    
     //populate data for fsr modules
     function populateData() {
       var promises = [];
       _config.layers.forEach((layer, index) => {
-        var countAggregate = {
-          alias: layer.value,
-          field: '*',
-          operator: 'count'
-        };
-        layer.query.aggregates = [countAggregate];
         layer.query.limit = ALL_RECORDS_SIZE;
         var _queryObj = new Query(layer.query);
         var promise = getResourceData(layer.value, _queryObj);
