@@ -146,7 +146,7 @@
       var margin = 0;
       var width = 15 + (30 * (_config.layers.length + 3));
       var parentDiv = document.getElementById("funnelChartParentDiv" + _config.wid)
-      parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:8px;")
+      parentDiv.setAttribute('style', "position: relative; z-index: 1;padding-top:8px; padding-left:25%")
       for (let i = 0; i < _config.layers.length; i++) {
 
         //create divs for left taper,  right taper and center
