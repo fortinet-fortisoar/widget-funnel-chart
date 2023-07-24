@@ -1,2 +1,2 @@
 # What's New
-Minor bug fix
+1. There is now a event listning feature.
