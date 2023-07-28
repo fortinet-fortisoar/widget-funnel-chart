@@ -116,6 +116,11 @@
       var promises = [];
       _config.layers.forEach((layer, index) => {
         layer.query.limit = 1;
+        layer.query.aggregates = [{
+          'operator': 'countdistinct',
+          'field': '*',
+          'alias': 'total'
+      }]
         var _queryObj = new Query(layer.query);
         var promise = getResourceData(layer.value, _queryObj);
         promises.push(promise);
@@ -124,7 +129,7 @@
         $scope.moduleList = [];
         _config.layers.forEach((layer, index) => {
           if (result[index] && result[index]['hydra:member'] && result[index]['hydra:member'].length > 0) {
-            $scope.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:totalItems'] })
+            $scope.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:member'][0].total })
           }
         })
         createFunnel();
