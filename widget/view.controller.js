@@ -115,7 +115,7 @@
     function populateData() {
       var promises = [];
       _config.layers.forEach((layer, index) => {
-        layer.query.limit = ALL_RECORDS_SIZE;
+        layer.query.limit = 1;
         var _queryObj = new Query(layer.query);
         var promise = getResourceData(layer.value, _queryObj);
         promises.push(promise);
@@ -124,7 +124,7 @@
         $scope.moduleList = [];
         _config.layers.forEach((layer, index) => {
           if (result[index] && result[index]['hydra:member'] && result[index]['hydra:member'].length > 0) {
-            $scope.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:member'][0][layer.value] })
+            $scope.moduleList.push({ 'title': layer.title, 'data': result[index]['hydra:totalItems'][0][layer.value] })
           }
         })
         createFunnel();
