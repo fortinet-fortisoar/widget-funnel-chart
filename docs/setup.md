@@ -29,6 +29,9 @@
 | Title                                      | Enter the title of the layer to display on the widget                                                                                                                           |
 | Value                                      | Considering the data is `JSON`, enter a `key` to display its corresponding `value` on a layer                                                                                   |
 | Add Layer                                  | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
+**Advanced Settings**
+| Update Content On Receiving Event | Toggle button to enable or disable the Event Listning |
+| Event Name | Enter the event name, the event name should be similar to the event name mentioned in  the broadcasting widget |
 
 ### Count of Records Across Modules
 

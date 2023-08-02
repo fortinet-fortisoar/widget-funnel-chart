@@ -4,9 +4,9 @@
     .module('cybersponse')
     .controller('funnelChart102Ctrl', funnelChart102Ctrl);
 
-  funnelChart102Ctrl.$inject = ['$scope', 'ALL_RECORDS_SIZE', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'CommonUtils'];
+  funnelChart102Ctrl.$inject = ['$scope', 'Query', '$resource', '$q', 'API', 'PagedCollection', '$rootScope', 'CommonUtils'];
 
-  function funnelChart102Ctrl($scope, ALL_RECORDS_SIZE, Query, $resource, $q, API, PagedCollection, $rootScope, CommonUtils) {
+  function funnelChart102Ctrl($scope, Query, $resource, $q, API, PagedCollection, $rootScope, CommonUtils) {
     $scope.color = {
       layer1: '#0598A1',
       layer2: '#20B4BD',
@@ -19,6 +19,13 @@
     __init()
 
     function __init() {
+      //if this event is supposed to listen to eny of the broadcasted events
+      if (_config.broadcastEvent) {
+        //example widget:globalVisibilityEvent from Record Summary card
+        $rootScope.$on("widget:"+_config.eventName, function (event, data) {
+          eventReceived(data);
+        })
+      }
       if (_config.moduleType == 'Across Modules') { 
         populateData(); 
       }
@@ -27,30 +34,27 @@
       }
     }
 
-    //if this event is supposed to listen to eny of the broadcasted events
-    if (_config.broadcastEvent) {
-      //example widget:globalVisibilityEvent from Record Summary card
-      $rootScope.$on("widget:"+_config.eventName, function (event, data) {
-        var element = document.getElementById("funnelChartParentDiv" + _config.wid);
-        element.style.visibility = 'hidden';
-        element.style.opacity = 0;
-        element.style.transition = 'visibility 0.3s linear,opacity 0.3s linear';
-        if (_config.moduleType == 'Single Module') {
-          var defer = $q.defer();
-          $resource(data).get(function (response) {
-            defer.resolve(response);
-          }, function (error) {
-            defer.reject(error);
-          })
-          defer.promise.then(function (response) {
-            formatDataForWidget(true, response[_config.customModuleField])
-            setTimeout(function () {
-              element.style.visibility = 'visible';
-              element.style.opacity = 1;
-            }, 600);
-          })
-        }
-      })
+
+    function eventReceived(data){
+      var element = document.getElementById("funnelChartParentDiv" + _config.wid);
+      element.style.visibility = 'hidden';
+      element.style.opacity = 0;
+      element.style.transition = 'visibility 0.3s linear,opacity 0.3s linear';
+      if (_config.moduleType == 'Single Module') {
+        var defer = $q.defer();
+        $resource(data).get(function (response) {
+          defer.resolve(response);
+        }, function (error) {
+          defer.reject(error);
+        })
+        defer.promise.then(function (response) {
+          formatDataForWidget(true, response[_config.customModuleField])
+          setTimeout(function () {
+            element.style.visibility = 'visible';
+            element.style.opacity = 1;
+          }, 600);
+        })
+      }
     }
 
     //to populate funnel for custom module

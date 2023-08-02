@@ -9,7 +9,7 @@
 		"description": "To Visualize the Progression of Data Through Funnel layers",
 		"help_online":"https://github.com/fortinet-fortisoar/widget-funnel-chart/blob/release/1.0.2/README.md",
 		"pages": [
-			"Dashboard"
+			"Dashboard", "Reports"
 		],
 		"snapshots": [
             "https://repo.fortisoar.fortinet.com/fsr-widgets/funnelChart-1.0.2/images/edit-controller-custom-module.png",
