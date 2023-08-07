@@ -24,7 +24,6 @@
             </span>
 
             <!-- Radio Button -->
-
             <div class="row margin-bottom-sm">
                 <div class="col-md-6 padding-right-0">
                     <div class="radio">
@@ -44,6 +43,7 @@
                 </div>
             </div>
             <!-- Radio Button End -->
+            
         </div>
         <!-- Show this block only when moduleType value is 1-->
         <div data-ng-if="config.moduleType == 'Single Module'">
@@ -180,7 +180,7 @@
                 <uib-accordion>
                     <div uib-accordion-group class="panel-default">
                         <uib-accordion-heading>
-                            <div class="queue-card-header padding-left-md workspace-connector-metadata-container"
+                            <div class=""
                                 ng-click="toggleArrow()" data-ng-class="{'queue-text-active-color': toggle">
                                 <div class="margin-right-lg pull-left"><span class="queue-card-actions">&nbsp;<i
                                             class="fa {{ toggle ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i></span>
@@ -190,7 +190,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </uib-accordion-heading>
-                        <div>
+                        <div class="padding-lg">
                             <label for="broadcastEvent"
                                 class="font-size-12 mp-solutionpack-contents-card margin-top-md margin-right-md">Update
                                 content on receiving event</label>
