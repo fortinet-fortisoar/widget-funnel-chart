@@ -1,12 +1,12 @@
 ## Release Information
 
-- **Version**: 1.0.1
+- **Version**: 1.0.2
 
 - **Certified**: No
 
 - **Publisher**: Fortinet  
 
-- **Compatibility**: 7.3.0 and later
+- **Compatibility**: 7.3.1 and later
 
 - **Applicable**: Dashboards
 
