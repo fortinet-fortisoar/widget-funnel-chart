@@ -61,6 +61,17 @@ This option helps retrieve and display data from a record that has values in `JS
 
 **NOTE**: You can add a minimum of `1` and maximum of `4` layers to the Funnel Chart widget.
 
+
+
+#### Advanced Settings:
+For this feature to work, user need to add a Widget with Broadcasting capability in the same dashboard. eg. (Record Summary Card Widget).
+
+Update content on receiving event.
+This toggle button emables the Funnel widget to Listen to an on-click event, broadcasted by another widget eg. Record Summary Card.
+Give the exact same event name in this widget, as given to the Record Summary Card widget
+![image](./res/advanced-settings.png)
+
+
 #### Example of a custom module
 
 The following image shows a record containing `JSON` data:
