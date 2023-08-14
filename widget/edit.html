@@ -9,17 +9,16 @@
     <div class="modal-body">
         <div class="form-group"
             data-ng-class="{ 'has-error': editFunnelWidgetForm.title.$invalid && editFunnelWidgetForm.title.$touched }">
-            <label for="title" class="control-label">Title<span class="text-danger">*</span></label> <input id="title"
-                name="title" type="text" data-ng-model="config.title" class="form-control" required />
+            <label for="title" class="control-label">Title</label> <input id="title"
+                name="title" type="text" data-ng-model="config.title" class="form-control" />
             <div data-cs-messages="editFunnelWidgetForm.title"></div>
         </div>
         <hr>
         <div
             data-ng-class="{ 'has-error': editFunnelWidgetForm.moduleType.$invalid && editFunnelWidgetForm.moduleType.$touched }">
-            <label for="moduleType" class="control-label">Select Data Source</label><span class="text-danger">*
+            <label id="funnel-data-source" for="moduleType" class="control-label">Select Data Source</label><span class="text-danger">*
                 <span
-                    data-uib-tooltip="Select the 'Record Containing JSON Data' option if all the records to be rendered are in a single record of a certain field of the module.
-                'Count of Records Across Module' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
+                    data-uib-tooltip="Select the 'Record Containing JSON Data' option if all the records to be rendered are in a single record of a certain field of the module. 'Count of Records Across Module' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
                     data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
             </span>
 
@@ -34,7 +33,7 @@
                             data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                     </div>
                     <div class="radio">
-                        <label><input id="accrossModules" name="accrossModules" type="radio"
+                        <label><input id="funnel-accrossModules" name="accrossModules" type="radio"
                                 data-ng-model="config.moduleType" data-ng-change="onChangedataSourceType()"
                                 value="Across Modules">&nbsp;&nbsp;Count of Records Across Module</label>
                         <span data-uib-tooltip="It allows you to get the count of records of the selected modules"
@@ -43,7 +42,7 @@
                 </div>
             </div>
             <!-- Radio Button End -->
-            
+
         </div>
         <!-- Show this block only when moduleType value is 1-->
         <div data-ng-if="config.moduleType == 'Single Module'">
@@ -95,7 +94,7 @@
 
                 </div>
                 <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="objectFields.length == 0">
-                    <span>Select a module wich contains JSON field</span>
+                    <span>Select a module which contains JSON field</span>
                 </div>
             </div>
         </div>
@@ -176,12 +175,11 @@
 
 
             <div data-ng-if="config.moduleType == 'Single Module'">
-
                 <uib-accordion>
                     <div uib-accordion-group class="panel-default">
                         <uib-accordion-heading>
                             <div class=""
-                                ng-click="toggleArrow()" data-ng-class="{'queue-text-active-color': toggle">
+                                ng-click="toggleAdvancedSettings()" data-ng-class="{'queue-text-active-color': toggle">
                                 <div class="margin-right-lg pull-left"><span class="queue-card-actions">&nbsp;<i
                                             class="fa {{ toggle ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i></span>
                                 </div>

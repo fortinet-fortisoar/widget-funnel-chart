@@ -15,6 +15,7 @@
     }
     var _config = $scope.config;
     $scope.filterValidation = false;
+    $scope.processing = false;
     
     __init()
 
@@ -40,6 +41,7 @@
       element.style.visibility = 'hidden';
       element.style.opacity = 0;
       element.style.transition = 'visibility 0.3s linear,opacity 0.3s linear';
+      $scope.processing = true;
       if (_config.moduleType == 'Single Module') {
         var defer = $q.defer();
         $resource(data).get(function (response) {
@@ -49,6 +51,7 @@
         })
         defer.promise.then(function (response) {
           formatDataForWidget(true, response[_config.customModuleField])
+          $scope.processing = false;
           setTimeout(function () {
             element.style.visibility = 'visible';
             element.style.opacity = 1;

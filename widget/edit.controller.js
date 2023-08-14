@@ -16,15 +16,12 @@
     $scope.removeLayer = removeLayer;
     $scope.onChangedataSourceType = onChangedataSourceType;
     $scope.maxlayers = false;
+    // List of modules containing atleast one JSON field
     $scope.jsonObjModuleList=[];
-    $scope.layers = $scope.layers ? $scope.layers : [];
+    $scope.layers = [];
     $scope.config.eventName = $scope.config.eventName ? $scope.config.eventName : "";
     $scope.config.broadcastEvent = $scope.config.broadcastEvent ? $scope.config.broadcastEvent : false;
-    $scope.toggleArrow = toggleArrow;
-
-    $scope.moduleType = {
-      type: ['Across Modules', 'Single Module']
-    }
+    $scope.toggleAdvancedSettings = toggleAdvancedSettings;
 
     function init() {
       appModulesService.load(true).then(function (modules) {
@@ -33,6 +30,7 @@
         //Create a list of modules with atleast one JSON field
         modules.forEach((module, index) =>{
           var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
+          //change for loop to foreach
           for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
             //Check If JSON field is present in the module
             if(moduleMetaData.attributes[fieldIndex].type === "object"){
@@ -52,7 +50,7 @@
 
     init();
     
-    function toggleArrow(){
+    function toggleAdvancedSettings(){
       $scope.toggle = $scope.toggle === undefined ? true : !$scope.toggle;
     }
 
