@@ -2,11 +2,11 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('editFunnelChart101Ctrl', editFunnelChart101Ctrl);
+    .controller('editFunnelChart102Ctrl', editFunnelChart102Ctrl);
 
-  editFunnelChart101Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'CRUD_HUB', 'Entity', '$q', 'modelMetadatasService'];
+  editFunnelChart102Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'Entity', 'modelMetadatasService'];
 
-  function editFunnelChart101Ctrl($scope, $uibModalInstance, config, appModulesService, _, CRUD_HUB, Entity, $q, modelMetadatasService) {
+  function editFunnelChart102Ctrl($scope, $uibModalInstance, config, appModulesService, _, Entity, modelMetadatasService) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
@@ -14,13 +14,14 @@
     $scope.loadAttributes = loadAttributes;
     $scope.addLayer = addLayer;
     $scope.removeLayer = removeLayer;
-    $scope.onChangeModuleType = onChangeModuleType;
+    $scope.onChangedataSourceType = onChangedataSourceType;
     $scope.maxlayers = false;
+    // List of modules containing atleast one JSON field
     $scope.jsonObjModuleList=[];
-
-    $scope.funnelModuleType = {
-      type: ['Across Modules', 'Single Module']
-    }
+    $scope.layers = [];
+    $scope.config.eventName = $scope.config.eventName ? $scope.config.eventName : "";
+    $scope.config.broadcastEvent = $scope.config.broadcastEvent ? $scope.config.broadcastEvent : false;
+    $scope.toggleAdvancedSettings = toggleAdvancedSettings;
 
     function init() {
       appModulesService.load(true).then(function (modules) {
@@ -29,6 +30,7 @@
         //Create a list of modules with atleast one JSON field
         modules.forEach((module, index) =>{
           var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
+          //change for loop to foreach
           for(let fieldIndex =0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++){
             //Check If JSON field is present in the module
             if(moduleMetaData.attributes[fieldIndex].type === "object"){
@@ -39,16 +41,26 @@
         })
       })
       $scope.config.layers = $scope.config.layers ? $scope.config.layers : [{ value: undefined, title: '' }];
+      if($scope.config.moduleType === 'Across Modules' && $scope.config.layers[0].value){
+        $scope.config.layers.forEach(function(item, index){
+          loadAttributes(index);
+        })
+      }
     }
 
     init();
+    
+    function toggleAdvancedSettings(){
+      $scope.toggle = $scope.toggle === undefined ? true : !$scope.toggle;
+    }
 
-    function onChangeModuleType() {
+    function onChangedataSourceType() {
       delete $scope.config.query;
       delete $scope.config.customModuleField;
       delete $scope.config.customModule;
       $scope.maxlayers = false;
       $scope.config.layers = [];
+      $scope.layers = [];
       $scope.config.layers.push({ value: undefined, title: '' });
     }
 
@@ -85,19 +97,14 @@
     }
 
     function loadAttributes(index) {
-      $scope.config.layers[index].fields = [];
-      $scope.config.layers[index].fieldsArray = [];
-      $scope.pickListFields = [];
+      $scope.layers[index] = {};
+      $scope.layers[index].fields = [];
+      $scope.layers[index].fieldsArray = [];
       var entity = new Entity($scope.config.layers[index].value);
       entity.loadFields().then(function () {
-        for (var key in entity.fields) {
-          if (entity.fields[key].type === "picklist") {
-            $scope.pickListFields.push(entity.fields[key]);
-          }
-        }
-        $scope.config.layers[index].fields = entity.getFormFields();
-        angular.extend($scope.config.layers[index].fields, entity.getRelationshipFields());
-        $scope.config.layers[index].fieldsArray = entity.getFormFieldsArray();
+        $scope.layers[index].fields = entity.getFormFields();
+        angular.extend($scope.layers[index].fields, entity.getRelationshipFields());
+        $scope.layers[index].fieldsArray = entity.getFormFieldsArray();
       });
     }
 

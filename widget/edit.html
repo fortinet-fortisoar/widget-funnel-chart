@@ -9,49 +9,50 @@
     <div class="modal-body">
         <div class="form-group"
             data-ng-class="{ 'has-error': editFunnelWidgetForm.title.$invalid && editFunnelWidgetForm.title.$touched }">
-            <label for="title" class="control-label">Title<span class="text-danger">*</span></label> <input id="title"
-                name="title" type="text" data-ng-model="config.title" class="form-control" required/>
+            <label for="title" class="control-label">Title</label> <input id="title"
+                name="title" type="text" data-ng-model="config.title" class="form-control" />
             <div data-cs-messages="editFunnelWidgetForm.title"></div>
         </div>
         <hr>
         <div
-            data-ng-class="{ 'has-error': editFunnelWidgetForm.funnelModuleType.$invalid && editFunnelWidgetForm.funnelModuleType.$touched }">
-            <label for="funnelModuleType" class="control-label">Select Data Source</label><span class="text-danger">*
+            data-ng-class="{ 'has-error': editFunnelWidgetForm.moduleType.$invalid && editFunnelWidgetForm.moduleType.$touched }">
+            <label id="funnel-data-source" for="moduleType" class="control-label">Select Data Source</label><span class="text-danger">*
                 <span
-                    data-uib-tooltip="Select the 'Record Containing JSON Data' option if all the records to be rendered are in a single record of a certain field of the module.
-                'Count of Records Across Module' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
+                    data-uib-tooltip="Select the 'Record Containing JSON Data' option if all the records to be rendered are in a single record of a certain field of the module. 'Count of Records Across Module' Dataset lets you select the module and it displays the count of records for the module based on the filters given"
                     data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
             </span>
 
             <!-- Radio Button -->
-
             <div class="row margin-bottom-sm">
                 <div class="col-md-6 padding-right-0">
                     <div class="radio">
                         <label><input id="JsonField" name="JsonField" type="radio"
-                                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" value="Single Module">&nbsp;&nbsp;Record Containing JSON Data</label>
-                                <span data-uib-tooltip="It allows you to select single record that contains a JSON object."
-                                    data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                                data-ng-model="config.moduleType" data-ng-change="onChangedataSourceType()"
+                                value="Single Module">&nbsp;&nbsp;Record Containing JSON Data</label>
+                        <span data-uib-tooltip="It allows you to select single record that contains a JSON object."
+                            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                     </div>
                     <div class="radio">
-                        <label><input id="accrossModules" name="accrossModules" type="radio"
-                                data-ng-model="config.funnelModuleType" data-ng-change="onChangeModuleType()" value="Across Modules">&nbsp;&nbsp;Count of Records Across Module</label>
-                                <span data-uib-tooltip="It allows you to get the count of records of the selected modules"
-                                data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                        <label><input id="funnel-accrossModules" name="accrossModules" type="radio"
+                                data-ng-model="config.moduleType" data-ng-change="onChangedataSourceType()"
+                                value="Across Modules">&nbsp;&nbsp;Count of Records Across Module</label>
+                        <span data-uib-tooltip="It allows you to get the count of records of the selected modules"
+                            data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                     </div>
                 </div>
             </div>
             <!-- Radio Button End -->
+
         </div>
-        <!-- Show this block only when funnelModuleType value is 1-->
-        <div data-ng-if="config.funnelModuleType == 'Single Module'">
+        <!-- Show this block only when moduleType value is 1-->
+        <div data-ng-if="config.moduleType == 'Single Module'">
             <div class="form-group" data-ng-if="jsonObjModuleList"
                 data-ng-class="{ 'has-error': editFunnelWidgetForm.customModule.$invalid && editFunnelWidgetForm.customModule.$touched }">
                 <label for="customModule" class="control-label">Data Source
                     <span class="text-danger">*</span>
                 </label>
-                <span data-uib-tooltip="Select the Module which has JSON data"
-                    data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
+                <span data-uib-tooltip="Select the Module which has JSON data" data-tooltip-append-to-body="true"><i
+                        class="icon icon-information font-Size-13"></i></span>
                 <select name="customModule" id="customModule" class="form-control"
                     data-ng-options="module.type as module.name for module in jsonObjModuleList"
                     data-ng-model="config.customModule"
@@ -65,7 +66,8 @@
                         <label class="control-label">Filter Record Which Contains The JSON Data
                             <span class="text-danger">*</span>
                         </label>
-                        <span data-uib-tooltip="It is recommended to apply filter, that filters out 1 record. If multiple records are filtered with the condition given, first record will be assumed"
+                        <span
+                            data-uib-tooltip="It is recommended to apply filter, that filters out 1 record. If multiple records are filtered with the condition given, first record will be assumed"
                             data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
                         <div data-cs-conditional data-ng-if="fieldsArray.length > 0" data-fields="$parent.fields"
                             data-reset-field="$parent.fields" data-mode="'queryFilters'"
@@ -75,14 +77,15 @@
                         </div>
                     </div>
 
-                    <div id="customModuleField" 
-                    data-ng-class="{ 'has-error': editFunnelWidgetForm.customModuleField.$invalid && editFunnelWidgetForm.customModuleField.$touched }" >
-                        <label class="control-label" >Select Field
+                    <div id="customModuleField"
+                        data-ng-class="{ 'has-error': editFunnelWidgetForm.customModuleField.$invalid && editFunnelWidgetForm.customModuleField.$touched }">
+                        <label class="control-label">Select Field
                             <span class="text-danger">*</span>
                         </label>
-                        <span data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
+                        <span
+                            data-uib-tooltip="Select the Field which has the data, only json type fields will be available in the dropdown"
                             data-tooltip-append-to-body="true"><i class="icon icon-information font-Size-13"></i></span>
-                        <select class="form-control"  name="customModuleField" id="customModuleField"
+                        <select class="form-control" name="customModuleField" id="customModuleField"
                             data-ng-options="field.name as field.title for field in objectFields"
                             data-ng-model="config.customModuleField" required>
                             <option value="">Select an Option</option>
@@ -91,17 +94,19 @@
 
                 </div>
                 <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="objectFields.length == 0">
-                    <span>Select a module wich contains JSON field</span>
+                    <span>Select a module which contains JSON field</span>
                 </div>
             </div>
         </div>
         <div class=" mertics-widget-border padding-top-md padding-bottom-md"></div>
         <div
-            data-ng-if="(config.funnelModuleType == 'Single Module' && config.customModuleField !== undefined) || (config.funnelModuleType == 'Across Modules' && modules)">
+            data-ng-if="(config.moduleType == 'Single Module' && config.customModuleField !== undefined) || (config.moduleType == 'Across Modules' && modules)">
             <div class="form-group dashed-border-section" data-ng-repeat="item in config.layers"
                 style="position:relative;">
                 <div style="padding: 12px;">
-                    <h6 style="margin-top: 0px;">Layer {{$index +1}}  <div class="display-inline-block" data-ng-if="$index===0">- (Top Layer)</div></h6> 
+                    <h6 style="margin-top: 0px;">Layer {{$index +1}} <div class="display-inline-block"
+                            data-ng-if="$index===0">- (Top Layer)</div>
+                    </h6>
                     <div
                         data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleTitle-'+$index].$invalid && editFunnelWidgetForm['moduleTitle-'+$index].$touched }">
                         <label for="moduleTitle" class="control-label">Title<span class="text-danger">*</span>
@@ -109,8 +114,8 @@
                         <input name="moduleTitle-{{$index}}" type="text" data-ng-model="item.title" class="form-control"
                             required />
                     </div>
-                    <!-- Show value field only when funnelModuleType value is 1-->
-                    <div data-ng-if="config.funnelModuleType == 'Single Module'">
+                    <!-- Show value field only when moduleType value is 1-->
+                    <div data-ng-if="config.moduleType == 'Single Module'">
                         <div
                             data-ng-class="{ 'has-error': editFunnelWidgetForm['customModuleValue-'+$index].$invalid && editFunnelWidgetForm['customModuleValue-'+$index].$touched }">
                             <label for="customModuleValue" class="control-label">value<span class="text-danger">*</span>
@@ -120,9 +125,9 @@
                         </div>
                         <div data-cs-messages="editFunnelWidgetForm.layer"></div>
                     </div>
-                    <!-- Show data sources only when funnelModuleType value is 0-->
-                    <div data-ng-if="config.funnelModuleType == 'Across Modules' ">
-                        <div id="funnelModuleType0" class="form-group">
+                    <!-- Show data sources only when moduleType value is 0-->
+                    <div data-ng-if="config.moduleType == 'Across Modules' ">
+                        <div id="moduleType0" class="form-group">
                             <div
                                 data-ng-class="{ 'has-error': editFunnelWidgetForm['moduleValue-' + $index].$invalid && editFunnelWidgetForm['moduleValue-' + $index].$touched }">
                                 <label for="moduleValue" class="control-label"> Data Source <span
@@ -134,13 +139,18 @@
                                     <option value="">Select an Option</option>
                                 </select>
                             </div>
-                            <div class="margin-top-md margin-bottom-md" data-ng-if="item.fields !== undefined">
+                            <div class="margin-top-md margin-bottom-md"
+                                data-ng-if="layers[$index].fields !== undefined">
                                 <label class="control-label">Filter Criteria </label>
-                                <div data-cs-conditional data-ng-if="item.fieldsArray.length > 0"
-                                    data-fields="item.fields" data-reset-field="item.fields" data-mode="'queryFilters'"
-                                    data-ng-model="item.query" data-parent-form="editFunnelWidgetForm"
+                                <div data-cs-conditional data-ng-if="layers[$index].fieldsArray.length > 0"
+                                    data-fields="layers[$index].fields" 
+                                    data-reset-field="layers[$index].fields"
+                                    data-mode="'queryFilters'" 
+                                    data-ng-model="item.query"
+                                    data-parent-form="editFunnelWidgetForm"
                                     data-enable-expression="(page==='dashboard' || page==='reporting')"
-                                    data-show-uuid="true" data-form-name="'editFunnelWidgetForm'">
+                                    data-show-uuid="true" 
+                                    data-form-name="'editFunnelWidgetForm'">
                                 </div>
                             </div>
                         </div>
@@ -153,12 +163,61 @@
             </div>
             <div class="row margin-left-0 margin-top-lg margin-bottom-lg" style="padding-left: 5px;"
                 data-ng-hide="processing || disabled">
-                <button data-ng-click="addLayer()" type="button" class="btn btn-primary btn-xs" data-ng-if="config.layers.length < 4">+
+                <button data-ng-click="addLayer()" type="button" class="btn btn-primary btn-xs"
+                    data-ng-if="config.layers.length < 4">+
                     &nbsp;Add Layer
                 </button>
             </div>
             <div class="alert-danger alert margin-bottom-xlg margin-top-md" data-ng-if="maxlayers === true">
                 <span>Maximum 4 layers can be added.</span>
+            </div>
+
+
+
+            <div data-ng-if="config.moduleType == 'Single Module'">
+                <uib-accordion>
+                    <div uib-accordion-group class="panel-default">
+                        <uib-accordion-heading>
+                            <div class=""
+                                ng-click="toggleAdvancedSettings()" data-ng-class="{'queue-text-active-color': toggle">
+                                <div class="margin-right-lg pull-left"><span class="queue-card-actions">&nbsp;<i
+                                            class="fa {{ toggle ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i></span>
+                                </div>
+                                <div class="pull-left queue-card-header-text margin-right-3">Advanced Settings
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </uib-accordion-heading>
+                        <div class="padding-lg">
+                            <label for="broadcastEvent"
+                                class="font-size-12 mp-solutionpack-contents-card margin-top-md margin-right-md">Update
+                                content on receiving event</label>
+                            <span
+                                data-uib-tooltip="Enable to broadcast an event, after enabling specify the event name foe the listener widget."
+                                data-tooltip-append-to-body="true"><i
+                                    class="icon icon-information font-size-12"></i></span>
+                            <label class="switch switch-pill switch-label switch-success padding-top-md">
+                                <input type="checkbox" class="switch-input" name="IncludeAll" id="IncludeAll"
+                                    data-ng-model="config.broadcastEvent">
+                                <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
+                            </label>
+                            <div data-ng-if="config.broadcastEvent">
+                                <div class="form-group"
+                                    data-ng-class="{ 'has-error': editFunnelWidgetForm.eventName.$invalid && editFunnelWidgetForm.eventName.$touched }">
+                                    <label for="eventName1" class="control-label">Event Name<span
+                                            class="text-danger">*</span></label>
+                                    <span
+                                        data-uib-tooltip="Enable to Listen to an event, after enabling specify the event name for the widget to listen."
+                                        data-tooltip-append-to-body="true"><i
+                                            class="icon icon-information font-Size-13"></i></span>
+                                    <input id="eventName" name="eventName" type="text" data-ng-model="config.eventName"
+                                        class="form-control" />
+                                    <div data-cs-messages="editFunnelWidgetForm.eventName"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-accordion>
             </div>
         </div>
     </div>
