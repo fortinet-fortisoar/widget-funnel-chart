@@ -30,7 +30,7 @@
 | Value                                      | Considering the data is `JSON`, enter a `key` to display its corresponding `value` on a layer                                                                                   |
 | Add Layer                                  | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
 **Advanced Settings**
-| Update Content On Receiving Event | Toggle button to enable or disable the Event Listning |
+| Update Content On Receiving Event | Enable to listen to an event. Once enabled, specify the event name for the widget to respond. Event name should be exactly same as the event name specified in the broadcast widget. |
 | Event Name | Enter the event name, the event name should be similar to the event name mentioned in  the broadcasting widget |
 
 ### Count of Records Across Modules
@@ -40,7 +40,7 @@
 | Title           | Enter the title for the layer to display on the widget                                                                                                                          |
 | Data Source     | Select the module to display its record count                                                                                                                                   |
 | Filter Criteria | Add conditions to retrieve the count of records meeting the filter conditions.                                                                                                  |
-| Add Layer       | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
+| Add Layer       | Add a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
 
 | [Usage](./usage.md) |
 |---------------------|

@@ -15,7 +15,7 @@ This section details the process to edit the widget and use it with data from a 
 
 This option helps retrieve and display data from a record that has values in `JSON` format. Select the **Record containing JSON Data** option if all data to be rendered is in a specific field of the module. The widget has filters to select only that record that meets the filter conditions.
 
-1. Edit a module's (e.g. *Dashboard*) view template and select **Add Widget** button.
+1. Edit a *Dashboard*'s view template and select **Add Widget** button.
 
 2. Select **Funnel Chart** from the list to bring up the **Funnel Chart** widget's customization modal.
 
@@ -61,16 +61,19 @@ This option helps retrieve and display data from a record that has values in `JS
 
 **NOTE**: You can add a minimum of `1` and maximum of `4` layers to the Funnel Chart widget.
 
+#### Advanced Settings
 
+Under **Advanced Settings**, this widget can be configured to listen to events *broadcasted by another widget in the same dashboard*. An example of a broadcasting widget is *Record Summary Card* widget.
 
-#### Advanced Settings:
-For this feature to work, user need to add a Widget with Broadcasting capability in the same dashboard. eg. (Record Summary Card Widget).
+Make a note of the event name being broadcasted by the widget. Use the exact event name when configuring *Funnel Chart*'s event listener.
 
-Update content on receiving event.
-This toggle button emables the Funnel widget to Listen to an on-click event, broadcasted by another widget eg. Record Summary Card.
-Give the exact same event name in this widget, as given to the Record Summary Card widget
 ![image](./res/advanced-settings.png)
 
+<table>
+    <tr>
+        <th>IMPORTANT</th><td>The event listening is triggered when you click a <em>Record Summary Card</em>. The <em>Funnel Chart</em> widget looks for compatible JSON data in the same record that contains data for the <em>Record Summary Card</em> widget.<br />The <em>Funnel Chart</em> widget must be appropriately configured to use data from that record for the event listening to work as intended.</td>
+    </tr>
+</table>
 
 #### Example of a custom module
 
@@ -92,7 +95,7 @@ The following image shows how the data appears in the funnel chart after adding 
 
 This option helps retrieve and display data from records across multiple modules. Select the **Count of Records Across Module** option to show data across modules. The widget has filters to select only that record that meets the filter conditions.
 
-1. Edit a module's (e.g. *Dashboard*) view template and select **Add Widget** button.
+1. Edit a *Dashboard*'s view template and select **Add Widget** button.
 
 2. Select **Funnel Chart** from the list to bring up the **Funnel Chart** widget's customization modal.
 
@@ -115,7 +118,6 @@ This option helps retrieve and display data from records across multiple modules
 11. Specify the **Title** and **Value** as explained in previous steps.
 
 **NOTE**: You can add a minimum of `1` and maximum of `4` layers to the Funnel Chart widget.
-
 
 #### Appearance
 
