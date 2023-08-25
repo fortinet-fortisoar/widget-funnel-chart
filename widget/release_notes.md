@@ -1,2 +1,3 @@
 # What's New
-1. There is now a event listning feature.
+
+- An event listening feature now listens to events broadcast by other widgets.
