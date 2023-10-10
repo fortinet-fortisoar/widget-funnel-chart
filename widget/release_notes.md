@@ -1,3 +1,3 @@
-# What's New
+## What's New
 
-- An event listening feature now listens to events broadcast by other widgets.
+- This widget can now be configured to listen to events and dynamically load data broadcasted by another widget in the same dashboard.
