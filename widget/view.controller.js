@@ -40,7 +40,6 @@
       var element = document.getElementById("funnelChartParentDiv" + _config.wid);
       element.style.visibility = 'hidden';
       element.style.opacity = 0;
-      element.style.transition = 'visibility 0.3s linear,opacity 0.3s linear';
       $scope.processing = true;
       if (_config.moduleType == 'Single Module') {
         var defer = $q.defer();
