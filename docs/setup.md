@@ -4,8 +4,8 @@
 # Installation
 
 1. To install a widget, click **Content Hub** > **Discover**.
-2. From the list of widget that appears, search for and select **Funnel Chart**.
-3. Click the card of the **Funnel Chart** widget.
+2. From the list of widget that appears, search **Funnel Chart**.
+3. Click the **Funnel Chart** widget.
 4. Click **Install** on the bottom to begin installation.
 
 # Configuration
@@ -30,14 +30,22 @@
 | Value                                      | Considering the data is `JSON`, enter a `key` to display its corresponding `value` on a layer                                                                                   |
 | Add Layer                                  | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
 
+|Advanced Settings|
+|:----------------|
+
+| Fields                            | Description                                                                                                                                                                          |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Update Content On Receiving Event | Enable to listen to an event. Once enabled, specify the event name for the widget to respond. Event name should be exactly same as the event name specified in the broadcast widget. |
+| Event Name                        | Enter the event name, the event name should be similar to the event name mentioned in  the broadcasting widget                                                                       |
+
 ### Count of Records Across Modules
 
-| Fields          | Description                                                                                                                                                                     |
-|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Title           | Enter the title for the layer to display on the widget                                                                                                                          |
-| Data Source     | Select the module to display its record count                                                                                                                                   |
-| Filter Criteria | Add conditions to retrieve the count of records meeting the filter conditions.                                                                                                  |
-| Add Layer       | Adds a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
+| Fields          | Description                                                                                                                                                                    |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Title           | Enter the title for the layer to display on the widget                                                                                                                         |
+| Data Source     | Select the module to display its record count                                                                                                                                  |
+| Filter Criteria | Add conditions to retrieve the count of records meeting the filter conditions.                                                                                                 |
+| Add Layer       | Add a new layer to the funnel chart widget. At least **one layer is mandatory**. You can append more layers or even delete a layer. You can have a maximum of **four** layers. |
 
 | [Usage](./usage.md) |
 |---------------------|
