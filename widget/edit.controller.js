@@ -2,11 +2,11 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('editFunnelChart102Ctrl', editFunnelChart102Ctrl);
+    .controller('editFunnelChart103Ctrl', editFunnelChart103Ctrl);
 
-  editFunnelChart102Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'Entity', 'modelMetadatasService'];
+  editFunnelChart103Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'Entity', 'modelMetadatasService'];
 
-  function editFunnelChart102Ctrl($scope, $uibModalInstance, config, appModulesService, _, Entity, modelMetadatasService) {
+  function editFunnelChart103Ctrl($scope, $uibModalInstance, config, appModulesService, _, Entity, modelMetadatasService) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
