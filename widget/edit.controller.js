@@ -4,12 +4,14 @@
     .module('cybersponse')
     .controller('editFunnelChart103Ctrl', editFunnelChart103Ctrl);
 
-  editFunnelChart103Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'Entity', 'modelMetadatasService'];
+  editFunnelChart103Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'appModulesService', '_', 'Entity', 'modelMetadatasService',
+  '$state'];
 
-  function editFunnelChart103Ctrl($scope, $uibModalInstance, config, appModulesService, _, Entity, modelMetadatasService) {
+  function editFunnelChart103Ctrl($scope, $uibModalInstance, config, appModulesService, _, Entity, modelMetadatasService, $state) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
+    $scope.page = $state.params.page;
     $scope.loadAttributesForCustomModule = loadAttributesForCustomModule;
     $scope.loadAttributes = loadAttributes;
     $scope.addLayer = addLayer;
@@ -66,7 +68,7 @@
 
     $scope.$watch('config.customModule', function (oldValue, newValue) {
       if ($scope.config.customModule && oldValue !== newValue) {
-        if ($scope.config.query.filters) {
+        if ($scope.config.query && $scope.config.query.filters) {
           delete $scope.config.query.filters;
         }
         delete $scope.config.customModuleField;
